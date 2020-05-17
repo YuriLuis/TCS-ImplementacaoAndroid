@@ -1,0 +1,2 @@
+rootProject.name='TCS - Implementacao'
+include ':app'
