@@ -10,8 +10,11 @@ import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.textfield.TextInputEditText
 import com.yuri.luis.garcia.pereira.tcs_implementacao.R
+import com.yuri.luis.garcia.pereira.tcs_implementacao.adapter.AdapterVariavel
 import com.yuri.luis.garcia.pereira.tcs_implementacao.config.RetrofitInitializer
 import com.yuri.luis.garcia.pereira.tcs_implementacao.enuns.TipoVariavel
 import com.yuri.luis.garcia.pereira.tcs_implementacao.model.Variavel
@@ -34,9 +37,11 @@ class VarivalFragment : Fragment() {
     private val CAMPO_OBRIGATORIO = "Campo Obrigatório"
     private  var tipoVariavel = TipoVariavel.NAO_INFORMADO
     private lateinit var botaoAdicionar : Button
-
+    private lateinit var recyclerViewVariavel : RecyclerView
     private var listaValor: ArrayList<VariavelValor> =
         mutableListOf<String>() as ArrayList<VariavelValor>
+    private var listaVariaveis : ArrayList<Variavel> =
+        mutableListOf<Variavel>() as ArrayList<Variavel>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,6 +50,9 @@ class VarivalFragment : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_varival, container, false)
         initComponents(view)
+        carregaDadosApiVariavel(view)
+        listaVariaveisRecyclerView(this.listaVariaveis)
+
         ouvinteRadioGroup(view)
         return view
     }
@@ -69,6 +77,37 @@ class VarivalFragment : Fragment() {
         })
     }
 
+    private fun listaVariaveisRecyclerView(variaveis : MutableList<Variavel>){
+        val layout = LinearLayoutManager(context)
+        val adapter =
+            AdapterVariavel(variaveis)
+        recyclerViewVariavel.adapter = adapter
+        recyclerViewVariavel.layoutManager = layout
+        recyclerViewVariavel.setHasFixedSize(true)
+    }
+
+    private fun carregaDadosApiVariavel(view : View){
+        val call: Call<List<Variavel>> = RetrofitInitializer()
+            .variavelService().getVariavel()
+        call.enqueue(object : Callback<List<Variavel>> {
+            override fun onResponse(
+                call: Call<List<Variavel>>,
+                response: Response<List<Variavel>>
+            ) {
+                if (response.isSuccessful) {
+                    var variaveis: List<Variavel> = response.body()!!
+                    variaveis.forEach { variavel -> // Preenche lista com nomes variaveis
+                        listaVariaveis.add(variavel)
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<List<Variavel>>, t: Throwable) {
+                Log.d("Resultado", "Falhou")
+            }
+        })
+    }
+
     private fun ouvinteRadioGroup(view: View){
         radioGroup.setOnCheckedChangeListener{_, checkId ->
             tipoVariavel =
@@ -88,15 +127,17 @@ class VarivalFragment : Fragment() {
         univalorada = view.findViewById<RadioButton>(R.id.radioButtonUnivalorada)
         multivalorada = view.findViewById<RadioButton>(R.id.radioButtonMultivalorada)
         botaoAdicionar = view.findViewById<Button>(R.id.buttonAddVariavel)
+        recyclerViewVariavel = view.findViewById<RecyclerView>(R.id.recyclerViewVariavel)
 
         botaoAdicionar.setOnClickListener {
 
             if (isCampoValido()){
                 postVariaveis(it)
             }
-
         }
     }
+
+
 
     private fun isCampoValido(): Boolean {
         if (isCampoInvalido(nomeVariavel.text.toString())) {
