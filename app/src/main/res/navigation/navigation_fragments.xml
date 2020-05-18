@@ -22,6 +22,9 @@
         <action
             android:id="@+id/action_variavelListAndAdd_to_varivalFragment"
             app:destination="@id/varivalFragment" />
+        <argument
+            android:name="variavel"
+            app:argType="com.yuri.luis.garcia.pereira.tcs_implementacao.model.Variavel" />
     </fragment>
     <fragment
         android:id="@+id/varivalFragment"
