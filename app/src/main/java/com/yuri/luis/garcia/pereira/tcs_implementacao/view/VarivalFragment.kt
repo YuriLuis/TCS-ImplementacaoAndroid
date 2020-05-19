@@ -142,8 +142,6 @@ class VarivalFragment : Fragment() {
 
                 override fun onItemClick(view: View?, position: Int) {
                     Toast.makeText(context, "Click normal", Toast.LENGTH_LONG).show()
-                    startActivity(Intent(context, VarivalFragment::class.java)
-                        .puextra)
 
                 }
 

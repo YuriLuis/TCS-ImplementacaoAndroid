@@ -37,6 +37,9 @@
         <action
             android:id="@+id/action_varivalFragment_to_variavelListAndAdd"
             app:destination="@id/variavelListAndAdd" />
+        <argument
+            android:name="variavel"
+            app:argType="com.yuri.luis.garcia.pereira.tcs_implementacao.model.Variavel" />
     </fragment>
     <fragment
         android:id="@+id/valorVariavelFragment"

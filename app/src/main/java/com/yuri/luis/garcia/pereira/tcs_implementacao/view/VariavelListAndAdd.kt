@@ -1,29 +1,24 @@
 package com.yuri.luis.garcia.pereira.tcs_implementacao.view
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.Button
 import android.widget.LinearLayout
-import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.navigation.Navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-
 import com.yuri.luis.garcia.pereira.tcs_implementacao.R
 import com.yuri.luis.garcia.pereira.tcs_implementacao.adapter.AdapterVariavel
 import com.yuri.luis.garcia.pereira.tcs_implementacao.config.RetrofitInitializer
 import com.yuri.luis.garcia.pereira.tcs_implementacao.model.Variavel
-import com.yuri.luis.garcia.pereira.tcs_implementacao.util.RecyclerItemClickListener
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-
 /**
  * A simple [Fragment] subclass.
  */
@@ -42,10 +37,8 @@ class VariavelListAndAdd : Fragment() {
         view.findViewById<FloatingActionButton>(R.id.btnFlutuanteAddVariavel).setOnClickListener {
             Navigation.findNavController(it).navigate(R.id.action_variavelListAndAdd_to_varivalFragment)
         }
-
         initcomponents(view)
         atualizaRecyclerViewVariaveis()
-        eventoClickRecyclerView()
         return view
     }
 
@@ -72,34 +65,11 @@ class VariavelListAndAdd : Fragment() {
         recyclerViewVariavel.layoutManager = layout
         recyclerViewVariavel.addItemDecoration(DividerItemDecoration(context, LinearLayout.VERTICAL))
         recyclerViewVariavel.setHasFixedSize(true)
-
-    }
-
-    private fun eventoClickRecyclerView(){
-        recyclerViewVariavel.addOnItemTouchListener(RecyclerItemClickListener(
-            context,
-            recyclerViewVariavel,
-            object : RecyclerItemClickListener.OnItemClickListener{
-                override fun onLongItemClick(view: View?, position: Int) {
-                    Toast.makeText(context,"Click Longo", Toast.LENGTH_LONG).show()
-                }
-
-                override fun onItemClick(view: View?, position: Int) {
-                    Navigation.findNavController(view!!).navigate(R.id.action_variavelListAndAdd_to_varivalFragment)
-
-                }
-
-                override fun onItemClick(
-                    parent: AdapterView<*>?,
-                    view: View?,
-                    position: Int,
-                    id: Long
-                ) {
-                    Toast.makeText(context,"Click normal2", Toast.LENGTH_LONG).show()
-                }
-
-            }
-        ))
+        adapter.onItemClick = {variavel ->
+            findNavController(recyclerViewVariavel).navigate(
+                VariavelListAndAddDirections.actionVariavelListAndAddToVarivalFragment(variavel)
+            )
+        }
     }
 
     private fun initcomponents(view : View){

@@ -7,11 +7,12 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.yuri.luis.garcia.pereira.tcs_implementacao.R
 import com.yuri.luis.garcia.pereira.tcs_implementacao.model.Variavel
-import kotlinx.android.synthetic.main.fragment_varival.view.*
 
 class AdapterVariavel(private val variaveis: MutableList<Variavel>) :
     RecyclerView.Adapter<AdapterVariavel.MyViewHolder>() {
 
+    private val TYPE_HEADER = 0
+    private val TYPE_ITEM = 1
     var onItemClick: ((Variavel) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -29,12 +30,16 @@ class AdapterVariavel(private val variaveis: MutableList<Variavel>) :
     }
 
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+         var tvItem : TextView = itemView.findViewById<TextView>(R.id.textViewVariavel)
 
-        var tvItem: TextView = itemView.findViewById<TextView>(R.id.textViewVariavel)
+        init {
+            tvItem.setOnClickListener {
+                onItemClick?.invoke(variaveis[adapterPosition])
+            }
+        }
 
-
-        fun bind(valor: Variavel) {
-            tvItem.text = valor.nome
+        fun bind(variavel : Variavel) {
+            tvItem.text = variavel.nome
         }
     }
 
