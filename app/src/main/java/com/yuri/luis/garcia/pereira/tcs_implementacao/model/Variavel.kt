@@ -2,7 +2,7 @@ package com.yuri.luis.garcia.pereira.tcs_implementacao.model
 
 import java.io.Serializable
 
-data class Variavel(
+data class Variavel (
     val idVariavel: Int?,
     val nome: String,
     val tipoVariavel: Int?,

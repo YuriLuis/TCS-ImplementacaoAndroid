@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.VarivalFragment" >
+    tools:context=".view.VarivalFragment">
 
     <TextView
         android:id="@+id/textView2"
@@ -94,7 +94,8 @@
         android:background="@color/botaoAdd"
         android:text="Adicionar "
         android:textColor="@color/textoBranco"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/buttonExcluir"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/radioGroupOp" />
 
@@ -110,5 +111,34 @@
         app:backgroundTint="@color/botaoAdd"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/buttonExcluir"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@color/botaoExcluir"
+        android:enabled="false"
+        android:fadeScrollbars="false"
+        android:text="Excluir"
+        android:textColor="@color/textoBranco"
+        android:visibility="visible"
+        app:layout_constraintEnd_toStartOf="@+id/buttonCancelar"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/buttonAddVariavel"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroupOp" />
+
+    <Button
+        android:id="@+id/buttonCancelar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@color/botaoCancelar"
+        android:text="Cancelar"
+        android:textColor="@color/textoBranco"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/buttonExcluir"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroupOp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

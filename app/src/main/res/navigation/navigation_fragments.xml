@@ -24,7 +24,9 @@
             app:destination="@id/varivalFragment" />
         <argument
             android:name="variavel"
-            app:argType="com.yuri.luis.garcia.pereira.tcs_implementacao.model.Variavel" />
+            app:argType="com.yuri.luis.garcia.pereira.tcs_implementacao.model.Variavel"
+            app:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
     <fragment
         android:id="@+id/varivalFragment"
@@ -39,7 +41,8 @@
             app:destination="@id/variavelListAndAdd" />
         <argument
             android:name="variavel"
-            app:argType="com.yuri.luis.garcia.pereira.tcs_implementacao.model.Variavel" />
+            app:argType="com.yuri.luis.garcia.pereira.tcs_implementacao.model.Variavel"
+            app:nullable="true" />
     </fragment>
     <fragment
         android:id="@+id/valorVariavelFragment"

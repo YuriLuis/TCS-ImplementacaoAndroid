@@ -19,6 +19,7 @@ import com.yuri.luis.garcia.pereira.tcs_implementacao.enuns.TipoVariavel
 import com.yuri.luis.garcia.pereira.tcs_implementacao.model.Variavel
 import com.yuri.luis.garcia.pereira.tcs_implementacao.model.VariavelValor
 import com.yuri.luis.garcia.pereira.tcs_implementacao.util.RecyclerItemClickListener
+import kotlinx.android.synthetic.main.fragment_varival.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -36,12 +37,15 @@ class VarivalFragment : Fragment() {
     private val CAMPO_OBRIGATORIO = "Campo Obrigatório"
     private var tipoVariavel = TipoVariavel.NAO_INFORMADO
     private lateinit var botaoAdicionar: Button
+    private lateinit var botaoExcluir: Button
+    private lateinit var botaoCancelar: Button
     private lateinit var recyclerViewVariavel: RecyclerView
     private var listaValor: ArrayList<VariavelValor> =
         mutableListOf<String>() as ArrayList<VariavelValor>
     private var listaVariaveis: ArrayList<Variavel> =
         mutableListOf<Variavel>() as ArrayList<Variavel>
     private lateinit var adapter: AdapterVariavel
+    private var variavel: Variavel = Variavel()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -49,6 +53,8 @@ class VarivalFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_varival, container, false)
+        variavel = VarivalFragmentArgs.fromBundle(arguments!!).variavel!!
+
         initComponents(view)
         ouvinteClickBotaoAdicionar()
         ouvinteRadioGroup()
@@ -71,6 +77,22 @@ class VarivalFragment : Fragment() {
         multivalorada = view.findViewById<RadioButton>(R.id.radioButtonMultivalorada)
         botaoAdicionar = view.findViewById<Button>(R.id.buttonAddVariavel)
         recyclerViewVariavel = view.findViewById<RecyclerView>(R.id.recyclerViewVariavel)
+        botaoCancelar = view.findViewById<Button>(R.id.buttonCancelar)
+        botaoExcluir = view.findViewById<Button>(R.id.buttonExcluir)
+
+        nomeVariavel.setText(variavel.nome)
+
+        if (nomeVariavel.text.toString().isNotEmpty()) {
+            botaoExcluir.visibility = View.VISIBLE
+            botaoCancelar.visibility = View.VISIBLE
+            /**EDITAR*/
+            botaoAdicionar.text = getString(R.string.editar)
+        } else {
+            botaoExcluir.visibility = View.INVISIBLE
+            botaoCancelar.visibility = View.INVISIBLE
+            /**NOVA_VARIAVEL*/
+            nomeVariavel.setText(variavel.nome)
+        }
 
     }
 

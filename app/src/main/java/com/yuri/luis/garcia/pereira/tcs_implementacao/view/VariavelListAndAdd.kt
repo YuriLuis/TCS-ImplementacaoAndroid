@@ -35,7 +35,9 @@ class VariavelListAndAdd : Fragment() {
         val view =  inflater.inflate(R.layout.fragment_list_and_add_variavel, container, false)
 
         view.findViewById<FloatingActionButton>(R.id.btnFlutuanteAddVariavel).setOnClickListener {
-            Navigation.findNavController(it).navigate(R.id.action_variavelListAndAdd_to_varivalFragment)
+            Navigation.findNavController(it).navigate(
+                VariavelListAndAddDirections.actionVariavelListAndAddToVarivalFragment(Variavel())
+            )
         }
         initcomponents(view)
         atualizaRecyclerViewVariaveis()
@@ -70,6 +72,7 @@ class VariavelListAndAdd : Fragment() {
                 VariavelListAndAddDirections.actionVariavelListAndAddToVarivalFragment(variavel)
             )
         }
+
     }
 
     private fun initcomponents(view : View){
