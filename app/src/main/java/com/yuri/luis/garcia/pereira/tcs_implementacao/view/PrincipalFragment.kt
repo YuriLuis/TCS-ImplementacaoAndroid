@@ -47,9 +47,6 @@ class PrincipalFragment : Fragment() {
             MediaStore.Images.Media.EXTERNAL_CONTENT_URI
         )
 
-        // Start new activity with the LOAD_IMAGE_RESULTS to handle back the results when image is picked from the Image Gallery.
-
-        // Start new activity with the LOAD_IMAGE_RESULTS to handle back the results when image is picked from the Image Gallery.
         startActivityForResult(i, LOAD_IMAGE_RESULTS)
 
 
