@@ -3,6 +3,7 @@
     package="com.yuri.luis.garcia.pereira.tcs_implementacao">
 
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
     <application
         android:allowBackup="true"
