@@ -1,6 +1,7 @@
 package com.yuri.luis.garcia.pereira.tcs_implementacao.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,9 +14,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.yuri.luis.garcia.pereira.tcs_implementacao.R
+import com.yuri.luis.garcia.pereira.tcs_implementacao.adapter.AdapterValorVariavel
 import com.yuri.luis.garcia.pereira.tcs_implementacao.adapter.AdapterVariavel
 import com.yuri.luis.garcia.pereira.tcs_implementacao.config.RetrofitInitializer
 import com.yuri.luis.garcia.pereira.tcs_implementacao.model.Variavel
+import com.yuri.luis.garcia.pereira.tcs_implementacao.model.VariavelValor
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -26,6 +29,8 @@ class VariavelListAndAdd : Fragment() {
 
     private lateinit var adapter : AdapterVariavel
     private lateinit var recyclerViewVariavel: RecyclerView
+    private var listaVariaveis: ArrayList<Variavel> =
+        mutableListOf<Variavel>() as ArrayList<Variavel>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,8 +45,14 @@ class VariavelListAndAdd : Fragment() {
             )
         }
         initcomponents(view)
-        atualizaRecyclerViewVariaveis()
+
         return view
+    }
+
+    override fun onStart() {
+        super.onStart()
+        carregaDadosApiVariavel()
+        atualizaRecyclerViewVariaveis()
     }
 
     private fun atualizaRecyclerViewVariaveis() {
@@ -52,17 +63,41 @@ class VariavelListAndAdd : Fragment() {
             }
 
             override fun onResponse(call: Call<List<Variavel>>, response: Response<List<Variavel>>) {
-                var variavel : List<Variavel> = response.body()!!
-                configuraRecyclerViewVariaveis(variavel as MutableList<Variavel>)
-                adapter.notifyDataSetChanged()
-            }
 
+                if (response.isSuccessful){
+                    var variavel : List<Variavel> = response.body()!!
+                    configuraAdapter(variavel)
+                    adapter.notifyDataSetChanged()
+                }
+            }
         })
     }
 
-    private fun configuraRecyclerViewVariaveis(variaveis: MutableList<Variavel>) {
+    private fun carregaDadosApiVariavel() {
+        var call: Call<List<Variavel>> = RetrofitInitializer()
+            .variavelService().findAllVariaveis()
+        call.enqueue(object : Callback<List<Variavel>> {
+            override fun onResponse(
+                call: Call<List<Variavel>>,
+                response: Response<List<Variavel>>
+            ) {
+                if (response.isSuccessful) {
+                    var variaveis: List<Variavel> = response.body()!!
+                    variaveis.forEach { variavel ->
+                        listaVariaveis.add(variavel)
+                        /**Salva dados da API no Array*/
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<List<Variavel>>, t: Throwable) {
+                Log.d("Resultado", "Falhou")
+            }
+        })
+    }
+
+    private fun configuraRecyclerViewVariaveis(adapter : AdapterVariavel) {
         val layout = LinearLayoutManager(context)
-        this.adapter = AdapterVariavel(variaveis)
         recyclerViewVariavel.adapter = adapter
         recyclerViewVariavel.layoutManager = layout
         recyclerViewVariavel.addItemDecoration(DividerItemDecoration(context, LinearLayout.VERTICAL))
@@ -72,11 +107,16 @@ class VariavelListAndAdd : Fragment() {
                 VariavelListAndAddDirections.actionVariavelListAndAddToVarivalFragment(variavel)
             )
         }
+    }
 
+    private fun configuraAdapter(list: List<Variavel>) {
+        adapter = AdapterVariavel(list as MutableList<Variavel>)
+        configuraRecyclerViewVariaveis(adapter)
     }
 
     private fun initcomponents(view : View){
         recyclerViewVariavel = view.findViewById<RecyclerView>(R.id.recyclerViewVariavel)
+        atualizaRecyclerViewVariaveis()
     }
 
 }

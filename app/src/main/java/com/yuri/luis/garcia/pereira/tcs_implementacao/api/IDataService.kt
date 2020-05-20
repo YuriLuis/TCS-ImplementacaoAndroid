@@ -1,5 +1,6 @@
 package com.yuri.luis.garcia.pereira.tcs_implementacao.api
 
+import com.yuri.luis.garcia.pereira.tcs_implementacao.model.Execucao
 import com.yuri.luis.garcia.pereira.tcs_implementacao.model.Variavel
 import com.yuri.luis.garcia.pereira.tcs_implementacao.model.VariavelValor
 import retrofit2.Call
@@ -12,7 +13,7 @@ interface IDataService {
     fun findAllVariaveis(): Call<List<Variavel>>
 
     @GET("variavel/{idVariavel}")
-    fun findAllVariaveis(@Path("idVariavel") idVariavel: Int): Call<Variavel>
+    fun findById(@Path("idVariavel") idVariavel: Int?): Call<Variavel>
 
     @POST("variavel/salvaVariavel")
     fun postVariavel(@Body variavel: Variavel): Call<Variavel>
@@ -25,6 +26,24 @@ interface IDataService {
 
     @DELETE("variavel/{idVariavel}")
     fun deleteVariavel(@Path("idVariavel") idVariavel: Int) : Call<Void>
+
+    @POST("execucao/iniciaExecucao/{idimage}")
+    fun iniciaExecucao(@Path("idimage") idimage : Int
+    ): retrofit2.Call<Execucao>
+
+    @POST("execucao/adicionaRespostas/{idexecucao}")
+    fun adicionaRespostas(@Path("idexecucao") idexecucao: Int, @Body arrayRespostas: List<String>): retrofit2.Call<Execucao>
+
+    @POST("salvaExecucao")
+    fun salvaExecucao(@Body v: Execucao): retrofit2.Call<Execucao>
+
+    @GET("execucao/{id}")
+    fun getExecucao(@Path("id") id : Int?
+    ): retrofit2.Call<Execucao>
+
+    @GET("/variavel/valor/{id}")
+    fun getVariavelValor(@Path("id") id : Int?
+    ): retrofit2.Call<VariavelValor>
 
 
 }

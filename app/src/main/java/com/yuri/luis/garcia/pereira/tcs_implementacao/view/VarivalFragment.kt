@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.textfield.TextInputEditText
 import com.yuri.luis.garcia.pereira.tcs_implementacao.R
-import com.yuri.luis.garcia.pereira.tcs_implementacao.adapter.AdapterVariavel
+import com.yuri.luis.garcia.pereira.tcs_implementacao.adapter.AdapterValorVariavel
 import com.yuri.luis.garcia.pereira.tcs_implementacao.config.RetrofitInitializer
 import com.yuri.luis.garcia.pereira.tcs_implementacao.enuns.TipoVariavel
 import com.yuri.luis.garcia.pereira.tcs_implementacao.model.Variavel
@@ -43,7 +43,7 @@ class VarivalFragment : Fragment() {
         mutableListOf<String>() as ArrayList<VariavelValor>
     private var listaVariaveis: ArrayList<Variavel> =
         mutableListOf<Variavel>() as ArrayList<Variavel>
-    private lateinit var adapter: AdapterVariavel
+    private lateinit var adapter: AdapterValorVariavel
     private var variavel: Variavel = Variavel()
     private var isNewVariavel = false
 
@@ -67,8 +67,6 @@ class VarivalFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         carregaDadosApiVariavel()
-        configuraRecyclerViewVariaveis(this.listaVariaveis)
-        atualizaRecyclerViewVariaveis()
     }
 
     private fun initComponents(view: View) {
@@ -90,6 +88,7 @@ class VarivalFragment : Fragment() {
 
     private fun verificaSeVariavelEhEditadaOuNova() {
         if (nomeVariavel.text.toString().isNotEmpty()) {
+            atualizaRecyclerViewVariaveis()
             botaoExcluir.visibility = View.VISIBLE
             botaoCancelar.visibility = View.VISIBLE
             /**EDITAR*/
@@ -153,27 +152,28 @@ class VarivalFragment : Fragment() {
     }
 
     private fun atualizaRecyclerViewVariaveis() {
-        var call = RetrofitInitializer().variavelService().findAllVariaveis()
-        call.enqueue(object : Callback<List<Variavel>> {
-            override fun onFailure(call: Call<List<Variavel>>, t: Throwable) {
+        var call = RetrofitInitializer().variavelService().findById(variavel.idVariavel)
+        call.enqueue(object : Callback<Variavel> {
+            override fun onFailure(call: Call<Variavel>, t: Throwable) {
 
             }
 
             override fun onResponse(
-                call: Call<List<Variavel>>,
-                response: Response<List<Variavel>>
+                call: Call<Variavel>,
+                response: Response<Variavel>
             ) {
-                var variavel: List<Variavel> = response.body()!!
-                configuraRecyclerViewVariaveis(variavel as MutableList<Variavel>)
-                adapter.notifyDataSetChanged()
+                if (response.isSuccessful) {
+                    var variavel = response.body()!!
+                    configuraAdapter(variavel.valores)
+                    adapter.notifyDataSetChanged()
+                }
             }
-
         })
     }
 
-    private fun configuraRecyclerViewVariaveis(variaveis: MutableList<Variavel>) {
+    private fun configuraRecyclerViewVariaveis(adapter: AdapterValorVariavel) {
         val layout = LinearLayoutManager(context)
-        this.adapter = AdapterVariavel(variaveis)
+        this.adapter = adapter
         recyclerViewVariavel.adapter = adapter
         recyclerViewVariavel.layoutManager = layout
         recyclerViewVariavel.addItemDecoration(
@@ -183,8 +183,13 @@ class VarivalFragment : Fragment() {
             )
         )
         recyclerViewVariavel.setHasFixedSize(true)
-
     }
+
+    private fun configuraAdapter(list: List<VariavelValor>) {
+        adapter = AdapterValorVariavel(list as MutableList<VariavelValor>)
+        configuraRecyclerViewVariaveis(adapter)
+    }
+
 
     private fun eventoClickRecyclerView() {
         recyclerViewVariavel.addOnItemTouchListener(RecyclerItemClickListener(
@@ -218,27 +223,32 @@ class VarivalFragment : Fragment() {
             if (isCampoValido()) {
                 if (isNewVariavel) {
                     postVariaveis()
+                    limpaCampos()
+                    atualizaRecyclerViewVariaveis()
+                    limpaCampos()
+                    Navigation.findNavController(it)
+                        .navigate(R.id.action_varivalFragment_to_variavelListAndAdd)
                 } else {
                     updateVariavel()
+                    Navigation.findNavController(it)
+                        .navigate(R.id.action_varivalFragment_to_variavelListAndAdd)
                 }
-                limpaCampos()
-                atualizaRecyclerViewVariaveis()
             }
-            Navigation.findNavController(it)
-                .navigate(R.id.action_varivalFragment_to_variavelListAndAdd)
         }
     }
 
-    private fun ouvinteClickBotaoExcluir(){
+    private fun ouvinteClickBotaoExcluir() {
         botaoExcluir.setOnClickListener {
             deleteVariavel()
+            atualizaRecyclerViewVariaveis()
             Navigation.findNavController(it)
                 .navigate(R.id.action_varivalFragment_to_variavelListAndAdd)
         }
     }
 
-    private fun ouvinteClickBotaoCancelar(){
+    private fun ouvinteClickBotaoCancelar() {
         botaoCancelar.setOnClickListener {
+            atualizaRecyclerViewVariaveis()
             Navigation.findNavController(it)
                 .navigate(R.id.action_varivalFragment_to_variavelListAndAdd)
         }
@@ -278,7 +288,7 @@ class VarivalFragment : Fragment() {
     private fun deleteVariavel() {
         var call =
             RetrofitInitializer().variavelService().deleteVariavel(variavel.idVariavel!!)
-        call.enqueue(object : Callback<Void>{
+        call.enqueue(object : Callback<Void> {
             override fun onFailure(call: Call<Void>, t: Throwable) {
                 Toast.makeText(context, "Ocorreu um erro tente novamente", Toast.LENGTH_LONG).show()
             }

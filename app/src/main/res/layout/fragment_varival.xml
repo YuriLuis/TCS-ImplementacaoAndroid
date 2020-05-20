@@ -118,7 +118,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:background="@color/botaoExcluir"
-        android:enabled="false"
         android:fadeScrollbars="false"
         android:text="Excluir"
         android:textColor="@color/textoBranco"

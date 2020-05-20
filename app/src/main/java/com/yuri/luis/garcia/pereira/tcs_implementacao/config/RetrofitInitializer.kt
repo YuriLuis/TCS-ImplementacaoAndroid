@@ -14,4 +14,8 @@ class RetrofitInitializer {
     fun variavelService() : IDataService {
         return retrofit.create(IDataService::class.java)
     }
+
+    fun Service() : IDataService {
+        return retrofit.create(IDataService::class.java)
+    }
 }

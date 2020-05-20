@@ -37,7 +37,16 @@ class PrincipalFragment : Fragment() {
             pegaImagemGaleria()
         }
 
+        view.findViewById<Button>(R.id.buttonExecucao).setOnClickListener {
+            teste(it)
+        }
+
+
         return view
+    }
+
+    private fun teste(view : View){
+        startActivity(Intent(context, ExecucaoActivity::class.java))
     }
 
     private fun pegaImagemGaleria()
