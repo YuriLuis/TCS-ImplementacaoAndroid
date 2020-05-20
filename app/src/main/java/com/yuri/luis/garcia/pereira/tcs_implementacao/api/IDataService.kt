@@ -12,14 +12,19 @@ interface IDataService {
     fun findAllVariaveis(): Call<List<Variavel>>
 
     @GET("variavel/{idVariavel}")
-    fun findAllVariaveis(@Path("idVariavel") idVariavel : Int): Call<Variavel>
+    fun findAllVariaveis(@Path("idVariavel") idVariavel: Int): Call<Variavel>
 
     @POST("variavel/salvaVariavel")
     fun postVariavel(@Body variavel: Variavel): Call<Variavel>
 
     @POST("variavel/adicionaValor/{idVariavel}")
-    fun postValorVariavel(@Path("idVariavel") idVariavel : Int ,
-                          @Body variavelValor: VariavelValor
+    fun postValorVariavel(
+        @Path("idVariavel") idVariavel: Int,
+        @Body variavelValor: VariavelValor
     ): Call<VariavelValor>
+
+    @DELETE("variavel/{idVariavel}")
+    fun deleteVariavel(@Path("idVariavel") idVariavel: Int) : Call<Void>
+
 
 }

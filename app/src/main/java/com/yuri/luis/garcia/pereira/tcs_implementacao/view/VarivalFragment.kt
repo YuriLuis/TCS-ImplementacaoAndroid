@@ -1,6 +1,5 @@
 package com.yuri.luis.garcia.pereira.tcs_implementacao.view
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,7 +19,6 @@ import com.yuri.luis.garcia.pereira.tcs_implementacao.enuns.TipoVariavel
 import com.yuri.luis.garcia.pereira.tcs_implementacao.model.Variavel
 import com.yuri.luis.garcia.pereira.tcs_implementacao.model.VariavelValor
 import com.yuri.luis.garcia.pereira.tcs_implementacao.util.RecyclerItemClickListener
-import kotlinx.android.synthetic.main.fragment_varival.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -46,6 +45,7 @@ class VarivalFragment : Fragment() {
         mutableListOf<Variavel>() as ArrayList<Variavel>
     private lateinit var adapter: AdapterVariavel
     private var variavel: Variavel = Variavel()
+    private var isNewVariavel = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -57,6 +57,8 @@ class VarivalFragment : Fragment() {
 
         initComponents(view)
         ouvinteClickBotaoAdicionar()
+        ouvinteClickBotaoExcluir()
+        ouvinteClickBotaoCancelar()
         ouvinteRadioGroup()
         eventoClickRecyclerView()
         return view
@@ -82,18 +84,49 @@ class VarivalFragment : Fragment() {
 
         nomeVariavel.setText(variavel.nome)
 
+        verificaSeVariavelEhEditadaOuNova()
+
+    }
+
+    private fun verificaSeVariavelEhEditadaOuNova() {
         if (nomeVariavel.text.toString().isNotEmpty()) {
             botaoExcluir.visibility = View.VISIBLE
             botaoCancelar.visibility = View.VISIBLE
             /**EDITAR*/
             botaoAdicionar.text = getString(R.string.editar)
+            verificaTipoDaVariavelPorId()
+
         } else {
             botaoExcluir.visibility = View.INVISIBLE
             botaoCancelar.visibility = View.INVISIBLE
+            isNewVariavel = true
             /**NOVA_VARIAVEL*/
             nomeVariavel.setText(variavel.nome)
         }
+    }
 
+    private fun updateVariavel() {
+        verificaTipoDaVariavel()
+        val postVariavel =
+            Variavel(
+                variavel.idVariavel,
+                nomeVariavel.text.toString(),
+                tipoVariavel.getTipo(),
+                listaValor
+            )
+
+        val call = RetrofitInitializer().variavelService()
+            .postVariavel(postVariavel)
+
+        call.enqueue(object : Callback<Variavel> {
+            override fun onFailure(call: Call<Variavel>, t: Throwable) {
+                Toast.makeText(context, "Ocorreu um erro tente novamente", Toast.LENGTH_LONG).show()
+            }
+
+            override fun onResponse(call: Call<Variavel>, response: Response<Variavel>) {
+                Toast.makeText(context, "Variavel editada com sucesso!", Toast.LENGTH_LONG).show()
+            }
+        })
     }
 
     private fun carregaDadosApiVariavel() {
@@ -183,10 +216,31 @@ class VarivalFragment : Fragment() {
     private fun ouvinteClickBotaoAdicionar() {
         botaoAdicionar.setOnClickListener {
             if (isCampoValido()) {
-                postVariaveis()
+                if (isNewVariavel) {
+                    postVariaveis()
+                } else {
+                    updateVariavel()
+                }
                 limpaCampos()
                 atualizaRecyclerViewVariaveis()
             }
+            Navigation.findNavController(it)
+                .navigate(R.id.action_varivalFragment_to_variavelListAndAdd)
+        }
+    }
+
+    private fun ouvinteClickBotaoExcluir(){
+        botaoExcluir.setOnClickListener {
+            deleteVariavel()
+            Navigation.findNavController(it)
+                .navigate(R.id.action_varivalFragment_to_variavelListAndAdd)
+        }
+    }
+
+    private fun ouvinteClickBotaoCancelar(){
+        botaoCancelar.setOnClickListener {
+            Navigation.findNavController(it)
+                .navigate(R.id.action_varivalFragment_to_variavelListAndAdd)
         }
     }
 
@@ -219,6 +273,21 @@ class VarivalFragment : Fragment() {
                     else -> TipoVariavel.NAO_INFORMADO
                 }
         }
+    }
+
+    private fun deleteVariavel() {
+        var call =
+            RetrofitInitializer().variavelService().deleteVariavel(variavel.idVariavel!!)
+        call.enqueue(object : Callback<Void>{
+            override fun onFailure(call: Call<Void>, t: Throwable) {
+                Toast.makeText(context, "Ocorreu um erro tente novamente", Toast.LENGTH_LONG).show()
+            }
+
+            override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                Toast.makeText(context, "Excluido com sucesso", Toast.LENGTH_LONG).show()
+            }
+
+        })
     }
 
     private fun isCampoValido(): Boolean {
@@ -254,6 +323,26 @@ class VarivalFragment : Fragment() {
                 /**(3)*/
             }
         }
+    }
+
+    private fun verificaTipoDaVariavelPorId() {
+        when {
+            isTipoVariavel(0) -> {
+                ouvinteRadioGroup().run { numerica.isChecked = true }
+            }
+            isTipoVariavel(1) -> {
+                ouvinteRadioGroup().run { univalorada.isChecked = true }
+                univalorada.isChecked = true
+            }
+            else -> {
+                ouvinteRadioGroup().run { multivalorada.isChecked = true }
+                multivalorada.isChecked = true
+            }
+        }
+    }
+
+    private fun isTipoVariavel(numero: Int): Boolean {
+        return variavel.tipoVariavel == numero
     }
 
     private fun isCampoInvalido(texto: String): Boolean {
