@@ -147,7 +147,7 @@ class PrincipalFragment : Fragment() {
             imageView.setImageBitmap(bitImage)
             if (URL != null) {
                 enviaImagem(URL)
-                //testemagem(URL)
+//                testemagem(URL)
             }
         }
 
