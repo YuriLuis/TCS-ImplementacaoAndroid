@@ -11,7 +11,6 @@ data class Execucao(
     val concluido: String?,
     val percentualAcerto :Int?
 ) {
-
     constructor(): this(null,
         null, null, emptyList(), null,null,null)
 }

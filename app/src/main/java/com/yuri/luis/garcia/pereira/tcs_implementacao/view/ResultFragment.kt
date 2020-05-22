@@ -2,6 +2,7 @@ package com.yuri.luis.garcia.pereira.tcs_implementacao.view
 
 import android.content.Context
 import android.graphics.BitmapFactory
+import android.os.Build
 import android.os.Bundle
 import android.util.AttributeSet
 import android.util.Base64
@@ -9,6 +10,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import com.yuri.luis.garcia.pereira.tcs_implementacao.R
 import com.yuri.luis.garcia.pereira.tcs_implementacao.config.RetrofitInitializer
@@ -18,6 +20,9 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.ByteArrayInputStream
+import java.text.DateFormat
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 
 /**
@@ -40,7 +45,7 @@ class ResultFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         val id = 3
-        getTomadaDecisao(id)
+        getTomadaDecisao(3)
 
     }
 
@@ -62,19 +67,21 @@ class ResultFragment : Fragment() {
                 Log.d("ERROR CHAMADA APi", "Falhou FALHOU CHAMDA: $t.message")
             }
 
+            @RequiresApi(Build.VERSION_CODES.O)
             override fun onResponse(call: Call<Execucao>, response: Response<Execucao>) {
                 Log.d("SUCESSO!", "Retornou getExecucao: $response.isSuccessful")
                 if (response.isSuccessful) {
                     execucao = response.body()!!
                     var imageData = execucao.image?.image
-//                    var byteArray = imageData?.toByteArray()
-//                    val arrayInputStream = ByteArrayInputStream(byteArray)
-//                    val bitmap = BitmapFactory.decodeStream(arrayInputStream)
+
                     val imageBytes = Base64.decode(imageData, 0)
                     val image = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
+                    val date = execucao.concluido
+                    val parsedDate = LocalDateTime.parse(date, DateTimeFormatter.ISO_DATE_TIME)
+                    val formattedDate = parsedDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"))
                     imageViewResult.setImageBitmap(image)
                     textPercent.text = execucao.percentualAcerto.toString() + " % "
-                    TextDate.text = execucao.concluido
+                    TextDate.text = formattedDate
                 }
             }
 
