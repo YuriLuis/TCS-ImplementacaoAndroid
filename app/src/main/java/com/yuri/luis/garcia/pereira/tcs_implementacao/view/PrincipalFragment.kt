@@ -13,6 +13,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.loader.content.CursorLoader
 import androidx.navigation.Navigation
@@ -35,6 +36,8 @@ import java.io.File
 class PrincipalFragment : Fragment() {
 
     private val LOAD_IMAGE_RESULTS = 1
+    private var objRetornoImage: ImageRetorno = ImageRetorno(null,null)
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -61,9 +64,20 @@ class PrincipalFragment : Fragment() {
     }
 
     private fun teste(view : View){
-        val i = Intent(context, ExecucaoActivity::class.java)
-        i.putExtra("idImage",1.toString())
-        startActivity(i)
+        if ((objRetornoImage.id_image != null) && (objRetornoImage.id_image!! > 0)) {
+            val i = Intent(context, ExecucaoActivity::class.java)
+            i.putExtra("idImage", objRetornoImage.id_image.toString())
+            startActivity(i)
+        }
+        else {
+            this.context?.let {
+                AlertDialog.Builder(it)
+                    .setTitle(R.string.app_name)
+                    .setMessage("Selecione uma foto!")
+                    .setPositiveButton("OK") { dialog, which -> dialog.dismiss()
+                    }.show()
+            }
+        }
     }
 
     private fun pegaImagemGaleria()
@@ -72,18 +86,17 @@ class PrincipalFragment : Fragment() {
             Intent.ACTION_PICK,
             MediaStore.Images.Media.EXTERNAL_CONTENT_URI
         )
-
         startActivityForResult(i, LOAD_IMAGE_RESULTS)
-
-
     }
 
     private fun enviaImagem(data: Uri) {
         var file = File(this.context?.let { getRealPathFromURIAPI11to18(it, data) })
-        var requestBody = RequestBody.create(MediaType.parse("image/jpeg"), file)
-        var filePart = MultipartBody.Part.createFormData("upload_file", "image_original", requestBody)
+        Log.d("CHRISTIAN", "dir: ${file.absoluteFile}")
 
-        var call = RetrofitInitializer().ServicePython().enviaImagem(filePart)
+        var requestFile: RequestBody  = RequestBody.create(MediaType.parse("image/*"), file)
+        var fileToUpload: MultipartBody.Part = MultipartBody.Part.createFormData("image_original", file.name, requestFile)
+
+        var call = RetrofitInitializer().ServicePython().enviaImagem(fileToUpload, requestFile)
         call.enqueue(object : Callback<ImageRetorno> {
             override fun onFailure(call: Call<ImageRetorno>, t: Throwable) {
                 Log.d("CHRISTIAN", "Falhou enviaImagem: $t.message")
@@ -93,31 +106,8 @@ class PrincipalFragment : Fragment() {
                 Log.d("CHRISTIAN", "********** Retornou enviaImagem *********:  $response.isSuccessful")
                 Log.d("CHRISTIAN", response.isSuccessful.toString())
                 if (response.isSuccessful) {
-                    var objExecucao = response.body()!!
-                    Log.d("CHRISTIAN", "Retornou: $objExecucao")
-                }
-            }
-
-        })
-    }
-
-    private fun testemagem(data: Uri) {
-        var file = File(this.context?.let { getRealPathFromURIAPI11to18(it, data) })
-        var requestBody = RequestBody.create(MediaType.parse("image/jpeg"), file)
-        var filePart = MultipartBody.Part.createFormData("image_original", "image_original", requestBody)
-
-        var call = RetrofitInitializer().ServicePython().getImagem()
-        call.enqueue(object : Callback<ImageRetorno> {
-            override fun onFailure(call: Call<ImageRetorno>, t: Throwable) {
-                Log.d("CHRISTIAN", "Falhou enviaImagem: $t.message")
-            }
-
-            override fun onResponse(call: Call<ImageRetorno>, response: Response<ImageRetorno>) {
-                Log.d("CHRISTIAN", "********** Retornou enviaImagem *********:  $response.isSuccessful")
-                Log.d("CHRISTIAN", response.isSuccessful.toString())
-                if (response.isSuccessful) {
-                    var objExecucao = response.body()!!
-                    Log.d("CHRISTIAN", "Retornou: $objExecucao")
+                    objRetornoImage = response.body()!!
+                    Log.d("CHRISTIAN", "Retornou: $objRetornoImage")
                 }
             }
 
@@ -141,13 +131,13 @@ class PrincipalFragment : Fragment() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        objRetornoImage = ImageRetorno(null,null)
         if(resultCode == RESULT_OK){
             val URL = data?.data
             val bitImage = MediaStore.Images.Media.getBitmap(activity?.contentResolver, URL)
             imageView.setImageBitmap(bitImage)
             if (URL != null) {
                 enviaImagem(URL)
-//                testemagem(URL)
             }
         }
 
