@@ -1,8 +1,10 @@
 package com.yuri.luis.garcia.pereira.tcs_implementacao.api
 
 import com.yuri.luis.garcia.pereira.tcs_implementacao.model.Execucao
+import com.yuri.luis.garcia.pereira.tcs_implementacao.model.ImageRetorno
 import com.yuri.luis.garcia.pereira.tcs_implementacao.model.Variavel
 import com.yuri.luis.garcia.pereira.tcs_implementacao.model.VariavelValor
+import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -45,5 +47,11 @@ interface IDataService {
     fun getVariavelValor(@Path("id") id : Int?
     ): retrofit2.Call<VariavelValor>
 
+    @Multipart
+    @POST("imagens")
+    fun enviaImagem(@Part filePart: MultipartBody.Part): retrofit2.Call<ImageRetorno>
+
+    @GET("imagens")
+    fun getImagem(): retrofit2.Call<ImageRetorno>
 
 }

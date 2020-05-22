@@ -19,6 +19,8 @@ class ExecucaoActivity : AppCompatActivity() {
     private lateinit var objExecucao: Execucao
     val checkBoxs: MutableList<String> = mutableListOf<String>()
     val checkBoxsSelec: MutableList<String> = mutableListOf<String>()
+    var idImageSel: Int = 0
+
 
     private fun abreActivityResultado() {
         /* val i = Intent(this, ResultadoActivity::class.java)
@@ -30,6 +32,11 @@ class ExecucaoActivity : AppCompatActivity() {
         Log.d("CHRISTIAN", "onCreate")
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_execucao)
+      
+        val param = intent.getStringExtra("idImage") ?: "0"
+        Log.d("CHRISTIAN", "param: $param" )
+        idImageSel = param.toInt()
+        Log.d("CHRISTIAN", "idImageSel: $idImageSel")
 
         val btn = findViewById<Button>(R.id.bt_Seguinte)
         btn.setOnClickListener {
@@ -105,7 +112,8 @@ class ExecucaoActivity : AppCompatActivity() {
     }
 
     private fun iniciaExecucao() {
-        var call = RetrofitInitializer().Service().iniciaExecucao(0)
+        var call = RetrofitInitializer().Service().iniciaExecucao(idImageSel)
+
         //var call = RetrofitInitializer().Service().getExecucao(1)
 
         call.enqueue(object : Callback<Execucao> {
