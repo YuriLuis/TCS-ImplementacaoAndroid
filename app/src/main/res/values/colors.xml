@@ -6,5 +6,6 @@
 
     <color name="botaoAdd">#156719</color>
     <color name="botaoCancelar">#D11717</color>
+    <color name="botaoExcluir">#FF5722</color>
     <color name="textoBranco">#FFFF</color>
 </resources>
