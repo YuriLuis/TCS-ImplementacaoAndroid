@@ -4,14 +4,14 @@ import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import androidx.fragment.app.Fragment
-import androidx.navigation.Navigation
 import com.yuri.luis.garcia.pereira.tcs_implementacao.R
 import com.yuri.luis.garcia.pereira.tcs_implementacao.config.RetrofitInitializer
+import com.yuri.luis.garcia.pereira.tcs_implementacao.model.Resultado
 import com.yuri.luis.garcia.pereira.tcs_implementacao.model.Variavel
 import kotlinx.android.synthetic.main.fragment_principal.*
 import retrofit2.Call
@@ -24,7 +24,6 @@ import retrofit2.Response
  */
 class ResultFragment : Fragment() {
 
-    private val LOAD_IMAGE_RESULTS = 1
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -32,30 +31,37 @@ class ResultFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view =  inflater.inflate(R.layout.fragment_result, container, false)
-
+       var id = 3
+        getTomadaDecisao(id)
         return view
     }
 
     override fun onStart() {
         super.onStart()
-        atualizaInformacoes()
+        val id = 3
+//        getTomadaDecisao(id)
 
     }
 
-    private fun atualizaInformacoes() {
-        var call = RetrofitInitializer().variavelService().findAllVariaveis()
-        call.enqueue(object : Callback<List<Variavel>> {
-            override fun onFailure(call: Call<List<Variavel>>, t: Throwable) {
+    private fun getTomadaDecisao(id: Int?) {
+        var resultado: Resultado = Resultado( null, null, null, null, null, null, null,null)
+        var call = RetrofitInitializer().Service().getTomadaDecisao(id)
+        call.enqueue(object : Callback<Resultado> {
+
+            override fun onFailure(call: Call<Resultado>, t: Throwable) {
+                Log.d("pedro", "Falhou resultado: $t.message")
 
             }
 
-            override fun onResponse(call: Call<List<Variavel>>, response: Response<List<Variavel>>) {
+            override fun onResponse(call: Call<Resultado>, response: Response<Resultado>) {
 
                 if (response.isSuccessful){
-                    var variavel : List<Variavel> = response.body()!!
-
+                   resultado = response.body()!!
+                    Log.d("pedro", "$resultado")
                 }
             }
+
+
         })
     }
 

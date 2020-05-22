@@ -16,8 +16,6 @@ import android.widget.Button
 import androidx.fragment.app.Fragment
 
 import androidx.loader.content.CursorLoader
-import androidx.navigation.Navigation
-import com.yuri.luis.garcia.pereira.tcs_implementacao.R
 import com.yuri.luis.garcia.pereira.tcs_implementacao.config.RetrofitInitializer
 import com.yuri.luis.garcia.pereira.tcs_implementacao.model.ImageRetorno
 import kotlinx.android.synthetic.main.fragment_principal.*
@@ -47,20 +45,20 @@ class PrincipalFragment : Fragment() {
 
     ): View? {
         // Inflate the layout for this fragment
-        val view =  inflater.inflate(R.layout.fragment_principal, container, false)
+        val view =  inflater.inflate(R.layout.fragment_result, container, false)
 
-
-        view.findViewById<Button>(R.id.btnVariavelTeste).setOnClickListener {
-            Navigation.findNavController(it).navigate(R.id.action_principalFragment_to_variavelListAndAdd)
-        }
-
-        view.findViewById<Button>(R.id.buttonPick).setOnClickListener {
-            pegaImagemGaleria()
-        }
-
-        view.findViewById<Button>(R.id.buttonExecucao).setOnClickListener {
-            teste(it)
-        }
+//
+//        view.findViewById<Button>(R.id.btnVariavelTeste).setOnClickListener {
+//            Navigation.findNavController(it).navigate(R.id.action_principalFragment_to_variavelListAndAdd)
+//        }
+//
+//        view.findViewById<Button>(R.id.buttonPick).setOnClickListener {
+//            pegaImagemGaleria()
+//        }
+//
+//        view.findViewById<Button>(R.id.buttonExecucao).setOnClickListener {
+//            teste(it)
+//        }
 
 
         return view
