@@ -21,6 +21,7 @@ class ExecucaoActivity : AppCompatActivity() {
     val checkBoxsSelec: MutableList<String> = mutableListOf<String>()
     var idImageSel: Int = 0
 
+
     private fun abreActivityResultado() {
         /* val i = Intent(this, ResultadoActivity::class.java)
          i.putExtra("idExecucao", objExecucao.idExecucao)
@@ -31,7 +32,7 @@ class ExecucaoActivity : AppCompatActivity() {
         Log.d("CHRISTIAN", "onCreate")
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_execucao)
-
+      
         val param = intent.getStringExtra("idImage") ?: "0"
         Log.d("CHRISTIAN", "param: $param" )
         idImageSel = param.toInt()
@@ -112,6 +113,7 @@ class ExecucaoActivity : AppCompatActivity() {
 
     private fun iniciaExecucao() {
         var call = RetrofitInitializer().Service().iniciaExecucao(idImageSel)
+
         //var call = RetrofitInitializer().Service().getExecucao(1)
 
         call.enqueue(object : Callback<Execucao> {

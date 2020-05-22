@@ -14,6 +14,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
+
 import androidx.loader.content.CursorLoader
 import androidx.navigation.Navigation
 import com.yuri.luis.garcia.pereira.tcs_implementacao.R
@@ -27,6 +28,11 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.File
+
+import androidx.navigation.Navigation
+import com.yuri.luis.garcia.pereira.tcs_implementacao.R
+import kotlinx.android.synthetic.main.fragment_principal.*
+
 
 
 /**
@@ -64,6 +70,7 @@ class PrincipalFragment : Fragment() {
         val i = Intent(context, ExecucaoActivity::class.java)
         i.putExtra("idImage",1.toString())
         startActivity(i)
+
     }
 
     private fun pegaImagemGaleria()
@@ -149,6 +156,7 @@ class PrincipalFragment : Fragment() {
                 enviaImagem(URL)
 //                testemagem(URL)
             }
+
         }
 
     }
