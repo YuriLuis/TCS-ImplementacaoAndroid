@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.AttributeSet
+import android.util.Base64
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -66,9 +67,12 @@ class ResultFragment : Fragment() {
                 if (response.isSuccessful) {
                     execucao = response.body()!!
                     var imageData = execucao.image?.image
-                    val arrayInputStream = ByteArrayInputStream(imageData)
-                    val bitmap = BitmapFactory.decodeStream(arrayInputStream)
-                    imageViewResult.setImageBitmap(bitmap)
+//                    var byteArray = imageData?.toByteArray()
+//                    val arrayInputStream = ByteArrayInputStream(byteArray)
+//                    val bitmap = BitmapFactory.decodeStream(arrayInputStream)
+                    val imageBytes = Base64.decode(imageData, 0)
+                    val image = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
+                    imageViewResult.setImageBitmap(image)
                     textPercent.text = execucao.percentualAcerto.toString() + " % "
                     TextDate.text = execucao.concluido
                 }
