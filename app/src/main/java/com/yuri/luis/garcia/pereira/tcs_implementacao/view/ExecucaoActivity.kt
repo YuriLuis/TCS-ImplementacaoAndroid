@@ -92,7 +92,7 @@ class ExecucaoActivity : AppCompatActivity() {
     }
 
     private fun getExecucao(idExecucao: Int?): Execucao {
-        var execucao: Execucao = Execucao(null, null, null, emptyList(), null)
+        var execucao: Execucao = Execucao(null, null, null, emptyList(), null,null,null)
         var call = RetrofitInitializer().Service().getExecucao(idExecucao)
         call.enqueue(object : Callback<Execucao> {
             override fun onFailure(call: Call<Execucao>, t: Throwable) {

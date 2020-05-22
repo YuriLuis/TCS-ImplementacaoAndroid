@@ -7,15 +7,16 @@
     tools:context=".view.PrincipalFragment">
 
     <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="179dp"
-        android:layout_height="185dp"
+        android:id="@+id/imageViewResult"
+        android:layout_width="295dp"
+        android:layout_height="307dp"
         android:src="@drawable/ic_launcher_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.577"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.223" />
+        app:layout_constraintVertical_bias="0.07" />
 
     <TextView
         android:id="@+id/textConcluido"
@@ -49,12 +50,12 @@
         android:id="@+id/TextDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="29/05/2020"
+        android:text=""
         android:textSize="18dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.631"
+        app:layout_constraintHorizontal_bias="0.773"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.564" />
@@ -63,14 +64,26 @@
         android:id="@+id/textPercent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="80%"
+        android:text=""
         android:textSize="18dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.631"
+        app:layout_constraintHorizontal_bias="0.45"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.64" />
+
+    <!--    <Button-->
+<!--        android:id="@+id/buttonTeste"-->
+<!--        android:layout_width="71dp"-->
+<!--        android:layout_height="63dp"-->
+<!--        android:text="Button"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.482"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintVertical_bias="0.872" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

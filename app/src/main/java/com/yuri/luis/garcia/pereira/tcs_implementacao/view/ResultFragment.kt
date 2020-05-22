@@ -1,9 +1,9 @@
 package com.yuri.luis.garcia.pereira.tcs_implementacao.view
 
-import android.app.Activity.RESULT_OK
-import android.content.Intent
+import android.content.Context
+import android.graphics.BitmapFactory
 import android.os.Bundle
-import android.provider.MediaStore
+import android.util.AttributeSet
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -11,12 +11,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.yuri.luis.garcia.pereira.tcs_implementacao.R
 import com.yuri.luis.garcia.pereira.tcs_implementacao.config.RetrofitInitializer
-import com.yuri.luis.garcia.pereira.tcs_implementacao.model.Resultado
-import com.yuri.luis.garcia.pereira.tcs_implementacao.model.Variavel
-import kotlinx.android.synthetic.main.fragment_principal.*
+import com.yuri.luis.garcia.pereira.tcs_implementacao.model.Execucao
+import kotlinx.android.synthetic.main.fragment_result.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.ByteArrayInputStream
 
 
 /**
@@ -39,40 +39,47 @@ class ResultFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         val id = 3
-//        getTomadaDecisao(id)
+        getTomadaDecisao(id)
 
     }
 
-    private fun getTomadaDecisao(id: Int?) {
-        var resultado: Resultado = Resultado( null, null, null, null, null, null, null,null)
-        var call = RetrofitInitializer().Service().getTomadaDecisao(id)
-        call.enqueue(object : Callback<Resultado> {
+    override fun onInflate(context: Context, attrs: AttributeSet, savedInstanceState: Bundle?) {
+        super.onInflate(context, attrs, savedInstanceState)
+        getTomadaDecisao(3)
 
-            override fun onFailure(call: Call<Resultado>, t: Throwable) {
-                Log.d("pedro", "Falhou resultado: $t.message")
+    }
 
+    override fun onResume() {
+        super.onResume()
+    }
+
+    private fun getTomadaDecisao(idExecucao: Int?): Execucao {
+        var execucao: Execucao = Execucao(null, null, null, emptyList(), null,null,null)
+        var call = RetrofitInitializer().Service().getExecucao(idExecucao)
+        call.enqueue(object : Callback<Execucao> {
+            override fun onFailure(call: Call<Execucao>, t: Throwable) {
+                Log.d("ERROR CHAMADA APi", "Falhou FALHOU CHAMDA: $t.message")
             }
 
-            override fun onResponse(call: Call<Resultado>, response: Response<Resultado>) {
-
-                if (response.isSuccessful){
-                   resultado = response.body()!!
-                    Log.d("pedro", "$resultado")
+            override fun onResponse(call: Call<Execucao>, response: Response<Execucao>) {
+                Log.d("SUCESSO!", "Retornou getExecucao: $response.isSuccessful")
+                if (response.isSuccessful) {
+                    execucao = response.body()!!
+                    var imageData = execucao.image?.image
+                    val arrayInputStream = ByteArrayInputStream(imageData)
+                    val bitmap = BitmapFactory.decodeStream(arrayInputStream)
+                    imageViewResult.setImageBitmap(bitmap)
+                    textPercent.text = execucao.percentualAcerto.toString() + " % "
+                    TextDate.text = execucao.concluido
                 }
             }
 
-
         })
+        return execucao;
     }
 
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if(resultCode == RESULT_OK){
-            val URL = data?.data
-            val bitImage = MediaStore.Images.Media.getBitmap(activity?.contentResolver, URL)
-            imageView.setImageBitmap(bitImage)
-        }
-
-    }
 
 }
+
+

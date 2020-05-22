@@ -11,8 +11,8 @@
         android:label="fragment_principal"
         tools:layout="@layout/fragment_principal" >
         <action
-            android:id="@+id/action_principalFragment_to_variavelListAndAdd"
-            app:destination="@id/variavelListAndAdd" />
+            android:id="@+id/action_principalFragment_to_resultFragment"
+            app:destination="@id/resultFragment" />
     </fragment>
     <fragment
         android:id="@+id/variavelListAndAdd"
@@ -56,4 +56,8 @@
             android:id="@+id/action_valorVariavelFragment_to_varivalFragment"
             app:destination="@id/varivalFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/resultFragment"
+        android:name="com.yuri.luis.garcia.pereira.tcs_implementacao.view.ResultFragment"
+        android:label="ResultFragment" />
 </navigation>
