@@ -7,9 +7,10 @@ data class Resultado(
     val contornos: Int?,
     val manchas: Int?,
     val image: String?,
+    val image_proc: String?,
     val concluido: String?,
-    val percentualAcerto: String?
+    val percentualAcerto: Double?
 ) {
 
-    constructor():this( null, null, null, null, null, null, null,null)
+    constructor():this( null, null, null, null, null, null, null,null, null)
 }

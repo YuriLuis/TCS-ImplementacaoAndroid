@@ -2,6 +2,7 @@ package com.yuri.luis.garcia.pereira.tcs_implementacao.api
 
 import com.yuri.luis.garcia.pereira.tcs_implementacao.model.*
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -40,19 +41,19 @@ interface IDataService {
     fun getExecucao(@Path("id") id : Int?
     ): retrofit2.Call<Execucao>
 
-    @GET("/variavel/valor/{id}")
+    @GET("variavel/valor/{id}")
     fun getVariavelValor(@Path("id") id : Int?
     ): retrofit2.Call<VariavelValor>
 
     @Multipart
     @POST("imagens")
-    fun enviaImagem(@Part filePart: MultipartBody.Part): retrofit2.Call<ImageRetorno>
+    fun enviaImagem(@Part file: MultipartBody.Part, @Part("file") name: RequestBody): retrofit2.Call<ImageRetorno>
 
     @GET("imagens")
     fun getImagem(): retrofit2.Call<ImageRetorno>
 
     @GET("/execucao/tomadaDecisao/{id}")
     fun getTomadaDecisao(@Path("id") id : Int?
-    ): retrofit2.Call<Resultado>
+    ): retrofit2.Call<Execucao>
 
 }

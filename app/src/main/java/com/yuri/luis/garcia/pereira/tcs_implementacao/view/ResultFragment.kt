@@ -1,6 +1,8 @@
 package com.yuri.luis.garcia.pereira.tcs_implementacao.view
 
 import android.content.Context
+import android.content.Intent
+import android.content.Intent.getIntent
 import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.Bundle
@@ -30,6 +32,7 @@ import java.time.format.DateTimeFormatter
  */
 class ResultFragment : Fragment() {
 
+    var idImageSel: Int = 0
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -37,15 +40,23 @@ class ResultFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view =  inflater.inflate(R.layout.fragment_result, container, false)
-       var id = 3
-        getTomadaDecisao(id)
+
+        val param = activity?.intent?.getStringExtra("idImage") ?: "0"
+        Log.d("CHRISTIAN", "param: $param" )
+        idImageSel = param.toInt()
+
+        getTomadaDecisao(idImageSel)
         return view
     }
 
     override fun onStart() {
         super.onStart()
-        val id = 3
-        getTomadaDecisao(3)
+
+        val param = activity?.intent?.getStringExtra("idImage") ?: "0"
+        Log.d("CHRISTIAN", "param: $param" )
+        idImageSel = param.toInt()
+
+        getTomadaDecisao(idImageSel)
 
     }
 

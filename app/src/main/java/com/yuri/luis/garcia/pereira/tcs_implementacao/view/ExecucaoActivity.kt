@@ -1,5 +1,6 @@
 package com.yuri.luis.garcia.pereira.tcs_implementacao.view
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -23,9 +24,10 @@ class ExecucaoActivity : AppCompatActivity() {
 
 
     private fun abreActivityResultado() {
-        /* val i = Intent(this, ResultadoActivity::class.java)
-         i.putExtra("idExecucao", objExecucao.idExecucao)
-         startActivity(i)*/
+         val i = Intent(this, ResultadoAcitivity::class.java)
+        Log.d("CHRISTIAN", "**** Enviando: " + objExecucao.idExecucao)
+         i.putExtra("idExecucao", objExecucao.idExecucao.toString())
+         startActivity(i)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,7 +36,6 @@ class ExecucaoActivity : AppCompatActivity() {
         setContentView(R.layout.activity_execucao)
       
         val param = intent.getStringExtra("idImage") ?: "0"
-        Log.d("CHRISTIAN", "param: $param" )
         idImageSel = param.toInt()
         Log.d("CHRISTIAN", "idImageSel: $idImageSel")
 
@@ -42,7 +43,6 @@ class ExecucaoActivity : AppCompatActivity() {
         btn.setOnClickListener {
             if (validate()) {
                 salvaRespostas()
-                abreActivityResultado()
             }
         }
         iniciaExecucao()
@@ -57,12 +57,11 @@ class ExecucaoActivity : AppCompatActivity() {
 
             override fun onResponse(call: Call<Execucao>, response: Response<Execucao>) {
                 Log.d("CHRISTIAN", "********** Retornou salvaRespostas *********:  $response.isSuccessful")
-                Log.d("CHRISTIAN", response.isSuccessful.toString())
                 if (response.isSuccessful) {
                     Log.d("CHRISTIAN", "Capturando objeto...")
-                    objExecucao = response.body()!!
+                    //objExecucao = response.body()!!
                     Log.d("CHRISTIAN", "Retornou: $objExecucao")
-                    Log.d("CHRISTIAN", "$objExecucao")
+                    abreActivityResultado()
                 }
             }
 

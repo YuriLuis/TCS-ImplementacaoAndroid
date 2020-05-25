@@ -9,7 +9,7 @@ data class Execucao(
     val regras: List<ExecucaoRegra>,
     val image: Image?,
     val concluido: String?,
-    val percentualAcerto :Int?
+    val percentualAcerto :Double?
 ) {
     constructor(): this(null,
         null, null, emptyList(), null,null,null)
