@@ -7,7 +7,7 @@
     tools:context=".view.PrincipalFragment">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/imageViewActivity"
         android:layout_width="179dp"
         android:layout_height="185dp"
         android:src="@drawable/ic_launcher_background"

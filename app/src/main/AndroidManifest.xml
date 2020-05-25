@@ -3,19 +3,22 @@
     package="com.yuri.luis.garcia.pereira.tcs_implementacao">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
-        android:requestLegacyExternalStorage="true"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:networkSecurityConfig="@xml/netword_security_config"
+        android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:networkSecurityConfig="@xml/netword_security_config"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.ExecucaoActivity"></activity>
-        <activity android:name=".view.MainActivity">
+        <activity android:name=".view.ValorVariavelActivity"></activity>
+        <activity android:name=".view.VariavelActivity" />
+        <activity android:name=".view.ListaVariavelAndAddActivity" />
+        <activity android:name=".view.ExecucaoActivity" />
+        <activity android:name=".view.PrincipalActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

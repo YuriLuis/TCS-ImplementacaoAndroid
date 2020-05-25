@@ -7,9 +7,7 @@ import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import androidx.fragment.app.Fragment
-import androidx.navigation.Navigation
 import com.yuri.luis.garcia.pereira.tcs_implementacao.R
 import com.yuri.luis.garcia.pereira.tcs_implementacao.config.RetrofitInitializer
 import com.yuri.luis.garcia.pereira.tcs_implementacao.model.Variavel
@@ -64,7 +62,7 @@ class ResultFragment : Fragment() {
         if(resultCode == RESULT_OK){
             val URL = data?.data
             val bitImage = MediaStore.Images.Media.getBitmap(activity?.contentResolver, URL)
-            imageView.setImageBitmap(bitImage)
+            imageViewActivity.setImageBitmap(bitImage)
         }
 
     }
