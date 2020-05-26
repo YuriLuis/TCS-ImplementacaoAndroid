@@ -17,6 +17,7 @@ class AdapterValorVariavel(private val variaveis: MutableList<VariavelValor>) :
     private val TYPE_HEADER = 0
     private val TYPE_ITEM = 1
     var onItemClick: ((VariavelValor) -> Unit)? = null
+    private lateinit var valor: VariavelValor
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val view: View = LayoutInflater.from(parent.context)
@@ -30,12 +31,17 @@ class AdapterValorVariavel(private val variaveis: MutableList<VariavelValor>) :
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.bind(variaveis[position])
-        var valor = variaveis[position]
+        this.valor = variaveis[position]
+
+    }
+
+    fun getteste(): VariavelValor {
+        return valor
     }
 
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var tvItem: TextView = itemView.findViewById<TextView>(R.id.textViewVariavel)
-        var tvIdValor : TextView = itemView.findViewById(R.id.textView4)
+        var tvIdValor: TextView = itemView.findViewById(R.id.textView4)
 
         init {
             tvItem.setOnClickListener {
@@ -45,7 +51,7 @@ class AdapterValorVariavel(private val variaveis: MutableList<VariavelValor>) :
         }
 
         fun bind(variavelValor: VariavelValor) {
-            tvItem.text = variavelValor.valor)
+            tvItem.text = variavelValor.valor
         }
     }
 

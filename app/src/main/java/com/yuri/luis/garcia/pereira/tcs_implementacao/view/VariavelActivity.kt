@@ -165,7 +165,7 @@ class VariavelActivity : AppCompatActivity() {
             startActivity(
                 Intent(this, ValorVariavelActivity::class.java)
                     .putExtra("variavel", this.variavel)
-                    .putExtra("valor", this.variavel.valores[1])
+                    .putExtra("valor", adapter.getteste())
             )
         }
     }

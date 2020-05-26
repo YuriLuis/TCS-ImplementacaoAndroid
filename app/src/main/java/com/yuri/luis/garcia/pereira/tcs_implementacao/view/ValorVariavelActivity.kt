@@ -21,6 +21,7 @@ class ValorVariavelActivity : AppCompatActivity() {
     private lateinit var textoValor: TextInputEditText
     private lateinit var botaoExlcuir : Button
     private lateinit var variavel: Variavel
+    private lateinit var valor : VariavelValor
     private val CAMPO_OBRIGATORIO = "Campo Obrigatório"
     private var isNewVariavel = false
 
@@ -46,6 +47,7 @@ class ValorVariavelActivity : AppCompatActivity() {
         var bundle: Bundle? = intent.extras
         if (bundle != null) {
             variavel = bundle.getSerializable("variavel") as Variavel
+            valor = bundle.getSerializable("valor") as VariavelValor
         }
     }
 
@@ -76,6 +78,7 @@ class ValorVariavelActivity : AppCompatActivity() {
     }
 
     private fun verificaSeVariavelEhEditadaOuNova() {
+        textoValor.setText(valor.valor)
 
         if (isCampoInvalido(textoValor.text.toString())) {
             botaoExlcuir.visibility = View.VISIBLE
@@ -95,16 +98,16 @@ class ValorVariavelActivity : AppCompatActivity() {
     private fun updateValor(){
         val postVariavel =
             VariavelValor(
-               2,
+               valor.idVariavelValor,
                 textoValor.text.toString(),
                 variavel
             )
 
         val call = RetrofitInitializer().variavelService()
-            .postValorVariavel(variavel.idVariavel!!, valorVariavel)
+            .postValorVariavel(variavel.idVariavel!!, valor)
 
-        call.enqueue(object : Callback<Variavel> {
-            override fun onFailure(call: Call<Variavel>, t: Throwable) {
+        call.enqueue(object : Callback<VariavelValor> {
+            override fun onFailure(call: Call<VariavelValor>, t: Throwable) {
                 Toast.makeText(
                     this@ValorVariavelActivity,
                     "Ocorreu um erro tente novamente",
@@ -112,7 +115,7 @@ class ValorVariavelActivity : AppCompatActivity() {
                 ).show()
             }
 
-            override fun onResponse(call: Call<Variavel>, response: Response<Variavel>) {
+            override fun onResponse(call: Call<VariavelValor>, response: Response<VariavelValor>) {
                 Toast.makeText(
                     this@ValorVariavelActivity,
                     "Variavel editada com sucesso!",
@@ -153,12 +156,13 @@ class ValorVariavelActivity : AppCompatActivity() {
                 ).show()
                 finish()
             } else {
-
+                updateValor()
                 Toast.makeText(
                     this@ValorVariavelActivity,
                     "Sucesso ao Atualizar Valor!!",
                     Toast.LENGTH_LONG
                 ).show()
+                finish()
             }
         }
     }
