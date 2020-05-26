@@ -28,29 +28,44 @@ interface IDataService {
     ): Call<VariavelValor>
 
     @DELETE("variavel/{idVariavel}")
-    fun deleteVariavel(@Path("idVariavel") idVariavel: Int) : Call<Void>
+    fun deleteVariavel(@Path("idVariavel") idVariavel: Int): Call<Void>
+
+    @DELETE("variavel/{idVariavel}")
+    fun deleteValorVariavel(
+        @Path("idVariavel") idVariavel: Int,
+        @Body variavelValor: VariavelValor
+    ): Call<Void>
 
     @POST("execucao/iniciaExecucao/{idimage}")
-    fun iniciaExecucao(@Path("idimage") idimage : Int
+    fun iniciaExecucao(
+        @Path("idimage") idimage: Int
     ): retrofit2.Call<Execucao>
 
     @POST("execucao/adicionaRespostas/{idexecucao}")
-    fun adicionaRespostas(@Path("idexecucao") idexecucao: Int, @Body arrayRespostas: List<String>): retrofit2.Call<Execucao>
+    fun adicionaRespostas(
+        @Path("idexecucao") idexecucao: Int,
+        @Body arrayRespostas: List<String>
+    ): retrofit2.Call<Execucao>
 
     @POST("salvaExecucao")
     fun salvaExecucao(@Body v: Execucao): retrofit2.Call<Execucao>
 
     @GET("execucao/{id}")
-    fun getExecucao(@Path("id") id : Int?
+    fun getExecucao(
+        @Path("id") id: Int?
     ): retrofit2.Call<Execucao>
 
     @GET("variavel/valor/{id}")
-    fun getVariavelValor(@Path("id") id : Int?
+    fun getVariavelValor(
+        @Path("id") id: Int?
     ): retrofit2.Call<VariavelValor>
 
     @Multipart
     @POST("imagens")
-    fun enviaImagem(@Part file: MultipartBody.Part, @Part("file") name: RequestBody): retrofit2.Call<ImageRetorno>
+    fun enviaImagem(
+        @Part file: MultipartBody.Part,
+        @Part("file") name: RequestBody
+    ): retrofit2.Call<ImageRetorno>
 
     @GET("imagens")
     fun getImagem(): retrofit2.Call<ImageRetorno>

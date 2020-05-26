@@ -1,9 +1,11 @@
 package com.yuri.luis.garcia.pereira.tcs_implementacao.adapter
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.navigation.ActivityNavigatorExtras
 import androidx.recyclerview.widget.RecyclerView
 import com.yuri.luis.garcia.pereira.tcs_implementacao.R
 import com.yuri.luis.garcia.pereira.tcs_implementacao.model.Variavel
@@ -28,19 +30,22 @@ class AdapterValorVariavel(private val variaveis: MutableList<VariavelValor>) :
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.bind(variaveis[position])
+        var valor = variaveis[position]
     }
 
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-         var tvItem : TextView = itemView.findViewById<TextView>(R.id.textViewVariavel)
+        var tvItem: TextView = itemView.findViewById<TextView>(R.id.textViewVariavel)
+        var tvIdValor : TextView = itemView.findViewById(R.id.textView4)
 
         init {
             tvItem.setOnClickListener {
                 onItemClick?.invoke(variaveis[adapterPosition])
+
             }
         }
 
-        fun bind(variavelValor: VariavelValor ) {
-            tvItem.text = variavelValor.valor
+        fun bind(variavelValor: VariavelValor) {
+            tvItem.text = variavelValor.valor)
         }
     }
 

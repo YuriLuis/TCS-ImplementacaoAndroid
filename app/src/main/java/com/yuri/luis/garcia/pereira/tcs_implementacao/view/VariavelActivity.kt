@@ -1,5 +1,6 @@
 package com.yuri.luis.garcia.pereira.tcs_implementacao.view
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -9,6 +10,7 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.textfield.TextInputEditText
 import com.yuri.luis.garcia.pereira.tcs_implementacao.R
 import com.yuri.luis.garcia.pereira.tcs_implementacao.adapter.AdapterValorVariavel
@@ -40,6 +42,7 @@ class VariavelActivity : AppCompatActivity() {
     private lateinit var adapter: AdapterValorVariavel
     private var variavel: Variavel = Variavel()
     private var isNewVariavel = false
+    private lateinit var floatButtonAddValor : FloatingActionButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,12 +54,14 @@ class VariavelActivity : AppCompatActivity() {
         ouvinteClickBotaoAdicionar()
         ouvinteClickBotaoCancelar()
         ouvinteClickBotaoExcluir()
+        eventoClickFloatActionButtonAdicionarValor()
         ouvinteRadioGroup()
     }
 
     override fun onStart() {
         super.onStart()
         carregaDadosApiVariavel()
+        atualizaRecyclerViewVariaveis()
     }
 
     private fun initComponents() {
@@ -69,6 +74,7 @@ class VariavelActivity : AppCompatActivity() {
         recyclerViewVariavel = findViewById(R.id.recyclerViewVariavel)
         botaoCancelar = findViewById(R.id.buttonCancelar)
         botaoExcluir = findViewById(R.id.buttonExcluir)
+        floatButtonAddValor = findViewById(R.id.floatingActionButtonAddValor)
 
         verificaSeVariavelEhEditadaOuNova()
     }
@@ -104,7 +110,6 @@ class VariavelActivity : AppCompatActivity() {
         var call = RetrofitInitializer().variavelService().findById(variavel.idVariavel)
         call.enqueue(object : Callback<Variavel> {
             override fun onFailure(call: Call<Variavel>, t: Throwable) {
-
             }
 
             override fun onResponse(
@@ -154,7 +159,15 @@ class VariavelActivity : AppCompatActivity() {
                 LinearLayout.VERTICAL
             )
         )
+
         recyclerViewVariavel.setHasFixedSize(true)
+        adapter.onItemClick = { variavel ->
+            startActivity(
+                Intent(this, ValorVariavelActivity::class.java)
+                    .putExtra("variavel", this.variavel)
+                    .putExtra("valor", this.variavel.valores[1])
+            )
+        }
     }
 
     private fun configuraAdapter(list: List<VariavelValor>) {
@@ -275,6 +288,13 @@ class VariavelActivity : AppCompatActivity() {
                 TipoVariavel.NAO_INFORMADO
                 /**(3)*/
             }
+        }
+    }
+
+    private fun eventoClickFloatActionButtonAdicionarValor(){
+        floatButtonAddValor.setOnClickListener{
+            startActivity(Intent(this, ValorVariavelActivity::class.java)
+                .putExtra("variavel", variavel))
         }
     }
 

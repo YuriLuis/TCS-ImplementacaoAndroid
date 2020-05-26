@@ -11,7 +11,6 @@ import androidx.fragment.app.Fragment
 import com.yuri.luis.garcia.pereira.tcs_implementacao.R
 import com.yuri.luis.garcia.pereira.tcs_implementacao.config.RetrofitInitializer
 import com.yuri.luis.garcia.pereira.tcs_implementacao.model.Variavel
-import kotlinx.android.synthetic.main.fragment_principal.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -62,7 +61,7 @@ class ResultFragment : Fragment() {
         if(resultCode == RESULT_OK){
             val URL = data?.data
             val bitImage = MediaStore.Images.Media.getBitmap(activity?.contentResolver, URL)
-            imageViewActivity.setImageBitmap(bitImage)
+           // imageViewActivity.setImageBitmap(bitImage)
         }
 
     }
