@@ -19,9 +19,9 @@ class ValorVariavelActivity : AppCompatActivity() {
     private lateinit var botaoAdicionarValorVariavel: Button
     private lateinit var botaoCancelar: Button
     private lateinit var textoValor: TextInputEditText
-    private lateinit var botaoExlcuir : Button
+    private lateinit var botaoExlcuir: Button
     private lateinit var variavel: Variavel
-    private lateinit var valor : VariavelValor
+    private lateinit var valor: VariavelValor
     private val CAMPO_OBRIGATORIO = "Campo Obrigatório"
     private var isNewVariavel = false
 
@@ -33,6 +33,7 @@ class ValorVariavelActivity : AppCompatActivity() {
         initComponent()
         eventoBotaoAdicionar()
         eventoBotaoCancelar()
+        eventoClickBotaoExcluir()
     }
 
     private fun initComponent() {
@@ -49,6 +50,29 @@ class ValorVariavelActivity : AppCompatActivity() {
             variavel = bundle.getSerializable("variavel") as Variavel
             valor = bundle.getSerializable("valor") as VariavelValor
         }
+
+
+    }
+
+    private fun updateValor() {
+
+        val postValorVariavelValor = VariavelValor(valor.idVariavelValor , textoValor.text.toString() , null)
+
+        val call = RetrofitInitializer().variavelService()
+            .postValorVariavel(variavel.idVariavel!!, postValorVariavelValor)
+
+        call.enqueue(object : Callback<VariavelValor> {
+            override fun onFailure(call: Call<VariavelValor>, t: Throwable) {
+                Toast.makeText(
+                    this@ValorVariavelActivity,
+                    "Ocorreu um erro tente novamente",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+
+            override fun onResponse(call: Call<VariavelValor>, response: Response<VariavelValor>) {
+            }
+        })
     }
 
     private fun postValorVariavel() {
@@ -81,53 +105,23 @@ class ValorVariavelActivity : AppCompatActivity() {
         textoValor.setText(valor.valor)
 
         if (isCampoInvalido(textoValor.text.toString())) {
-            botaoExlcuir.visibility = View.VISIBLE
-            botaoCancelar.visibility = View.VISIBLE
-            /**EDITAR*/
-            botaoAdicionarValorVariavel.text = getString(R.string.editar)
-
-        } else {
             botaoExlcuir.visibility = View.INVISIBLE
             botaoCancelar.visibility = View.INVISIBLE
             isNewVariavel = true
             /**NOVA_VARIAVEL*/
-            textoValor.setText(variavel.nome)
+            textoValor.setText(valor.valor)
+        } else {
+            botaoExlcuir.visibility = View.VISIBLE
+            botaoCancelar.visibility = View.VISIBLE
+            /**EDITAR*/
+            botaoAdicionarValorVariavel.text = getString(R.string.editar)
         }
-    }
-
-    private fun updateValor(){
-        val postVariavel =
-            VariavelValor(
-               valor.idVariavelValor,
-                textoValor.text.toString(),
-                variavel
-            )
-
-        val call = RetrofitInitializer().variavelService()
-            .postValorVariavel(variavel.idVariavel!!, valor)
-
-        call.enqueue(object : Callback<VariavelValor> {
-            override fun onFailure(call: Call<VariavelValor>, t: Throwable) {
-                Toast.makeText(
-                    this@ValorVariavelActivity,
-                    "Ocorreu um erro tente novamente",
-                    Toast.LENGTH_LONG
-                ).show()
-            }
-
-            override fun onResponse(call: Call<VariavelValor>, response: Response<VariavelValor>) {
-                Toast.makeText(
-                    this@ValorVariavelActivity,
-                    "Variavel editada com sucesso!",
-                    Toast.LENGTH_LONG
-                ).show()
-            }
-        })
     }
 
     private fun deleteVariavel() {
         var call =
-            RetrofitInitializer().variavelService().deleteValorVariavel(variavel.idVariavel!!, valor)
+            RetrofitInitializer().variavelService()
+                .deleteValorVariavel(variavel.idVariavel!!, valor)
         call.enqueue(object : Callback<Void> {
             override fun onFailure(call: Call<Void>, t: Throwable) {
                 Toast.makeText(
@@ -138,7 +132,11 @@ class ValorVariavelActivity : AppCompatActivity() {
             }
 
             override fun onResponse(call: Call<Void>, response: Response<Void>) {
-                Toast.makeText(this@ValorVariavelActivity, "Excluido com sucesso", Toast.LENGTH_LONG)
+                Toast.makeText(
+                    this@ValorVariavelActivity,
+                    "Excluido com sucesso",
+                    Toast.LENGTH_LONG
+                )
                     .show()
             }
 
@@ -147,7 +145,7 @@ class ValorVariavelActivity : AppCompatActivity() {
 
     private fun eventoBotaoAdicionar() {
         botaoAdicionarValorVariavel.setOnClickListener {
-            if (isCampoValido()) {
+            if (valor == null) {
                 postValorVariavel()
                 Toast.makeText(
                     this@ValorVariavelActivity,
@@ -167,13 +165,14 @@ class ValorVariavelActivity : AppCompatActivity() {
         }
     }
 
-    private fun eventoClickBotaoExcluir(){
+    private fun eventoClickBotaoExcluir() {
         botaoExlcuir.setOnClickListener {
-
+            deleteVariavel()
+            finish()
         }
     }
 
-    private fun eventoBotaoCancelar(){
+    private fun eventoBotaoCancelar() {
         botaoCancelar.setOnClickListener {
             finish()
         }

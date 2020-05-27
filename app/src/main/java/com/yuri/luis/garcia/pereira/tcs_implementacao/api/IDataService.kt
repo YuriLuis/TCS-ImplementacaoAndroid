@@ -30,7 +30,7 @@ interface IDataService {
     @DELETE("variavel/{idVariavel}")
     fun deleteVariavel(@Path("idVariavel") idVariavel: Int): Call<Void>
 
-    @DELETE("variavel/{idVariavel}")
+    @POST("variavel/deletaValor/{idVariavel}")
     fun deleteValorVariavel(
         @Path("idVariavel") idVariavel: Int,
         @Body variavelValor: VariavelValor

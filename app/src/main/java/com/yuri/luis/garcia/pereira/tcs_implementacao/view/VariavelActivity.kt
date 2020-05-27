@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.*
-import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -18,6 +17,7 @@ import com.yuri.luis.garcia.pereira.tcs_implementacao.config.RetrofitInitializer
 import com.yuri.luis.garcia.pereira.tcs_implementacao.enuns.TipoVariavel
 import com.yuri.luis.garcia.pereira.tcs_implementacao.model.Variavel
 import com.yuri.luis.garcia.pereira.tcs_implementacao.model.VariavelValor
+import com.yuri.luis.garcia.pereira.tcs_implementacao.util.RecyclerItemClickListener
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -41,8 +41,9 @@ class VariavelActivity : AppCompatActivity() {
         mutableListOf<Variavel>() as ArrayList<Variavel>
     private lateinit var adapter: AdapterValorVariavel
     private var variavel: Variavel = Variavel()
+    private var valor: VariavelValor = VariavelValor()
     private var isNewVariavel = false
-    private lateinit var floatButtonAddValor : FloatingActionButton
+    private lateinit var floatButtonAddValor: FloatingActionButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,6 +54,7 @@ class VariavelActivity : AppCompatActivity() {
         carregaDadosApiVariavel()
         ouvinteClickBotaoAdicionar()
         ouvinteClickBotaoCancelar()
+        eventoClickRecyclerView()
         ouvinteClickBotaoExcluir()
         eventoClickFloatActionButtonAdicionarValor()
         ouvinteRadioGroup()
@@ -62,6 +64,7 @@ class VariavelActivity : AppCompatActivity() {
         super.onStart()
         carregaDadosApiVariavel()
         atualizaRecyclerViewVariaveis()
+        carregaDadosApiVariavel()
     }
 
     private fun initComponents() {
@@ -81,7 +84,7 @@ class VariavelActivity : AppCompatActivity() {
 
     private fun recuperaDadosIntentVariavel() {
         var bundle: Bundle? = intent.extras
-        if (bundle != null){
+        if (bundle != null) {
             variavel = bundle.getSerializable("variavel") as Variavel
         }
     }
@@ -89,21 +92,21 @@ class VariavelActivity : AppCompatActivity() {
     private fun verificaSeVariavelEhEditadaOuNova() {
         nomeVariavel.setText(variavel.nome)
 
-        if (nomeVariavel.text.toString().isNotEmpty()) {
+        if (valor !=null){
             atualizaRecyclerViewVariaveis()
             botaoExcluir.visibility = View.VISIBLE
             botaoCancelar.visibility = View.VISIBLE
             /**EDITAR*/
             botaoAdicionar.text = getString(R.string.editar)
             verificaTipoDaVariavelPorId()
-
-        } else {
+        }else {
             botaoExcluir.visibility = View.INVISIBLE
             botaoCancelar.visibility = View.INVISIBLE
             isNewVariavel = true
             /**NOVA_VARIAVEL*/
             nomeVariavel.setText(variavel.nome)
         }
+
     }
 
     private fun atualizaRecyclerViewVariaveis() {
@@ -161,13 +164,48 @@ class VariavelActivity : AppCompatActivity() {
         )
 
         recyclerViewVariavel.setHasFixedSize(true)
+        /*
         adapter.onItemClick = { variavel ->
             startActivity(
                 Intent(this, ValorVariavelActivity::class.java)
-                    .putExtra("variavel", this.variavel)
+                    .putExtra("variavel", variavel)
                     .putExtra("valor", adapter.getteste())
             )
         }
+         */
+    }
+
+    private fun eventoClickRecyclerView() {
+        recyclerViewVariavel.addOnItemTouchListener(
+            RecyclerItemClickListener(this,
+                recyclerViewVariavel,
+                object : RecyclerItemClickListener.OnItemClickListener {
+                    override fun onLongItemClick(view: View?, position: Int) {
+
+                    }
+
+                    override fun onItemClick(view: View?, position: Int) {
+                        if (valor != null){
+                            valor = variavel.valores[position]
+                        }
+                        startActivity(
+                            Intent(this@VariavelActivity, ValorVariavelActivity::class.java)
+                                .putExtra("variavel", variavel)
+                                .putExtra("valor", valor)
+                        )
+                    }
+
+                    override fun onItemClick(
+                        parent: AdapterView<*>?,
+                        view: View?,
+                        position: Int,
+                        id: Long
+                    ) {
+
+                    }
+
+                })
+        )
     }
 
     private fun configuraAdapter(list: List<VariavelValor>) {
@@ -291,10 +329,13 @@ class VariavelActivity : AppCompatActivity() {
         }
     }
 
-    private fun eventoClickFloatActionButtonAdicionarValor(){
-        floatButtonAddValor.setOnClickListener{
-            startActivity(Intent(this, ValorVariavelActivity::class.java)
-                .putExtra("variavel", variavel))
+    private fun eventoClickFloatActionButtonAdicionarValor() {
+        floatButtonAddValor.setOnClickListener {
+            startActivity(
+                Intent(this, ValorVariavelActivity::class.java)
+                    .putExtra("variavel", variavel)
+                    .putExtra("valor", valor)
+            )
         }
     }
 
