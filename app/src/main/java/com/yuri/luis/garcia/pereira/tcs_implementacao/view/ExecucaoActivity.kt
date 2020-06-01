@@ -49,7 +49,7 @@ class ExecucaoActivity : AppCompatActivity() {
     }
 
     private fun salvaRespostas() {
-        var call = RetrofitInitializer().Service().adicionaRespostas(objExecucao?.idExecucao!!, checkBoxsSelec)
+        var call = RetrofitInitializer().service().adicionaRespostas(objExecucao?.idExecucao!!, checkBoxsSelec)
         call.enqueue(object : Callback<Execucao> {
             override fun onFailure(call: Call<Execucao>, t: Throwable) {
                 Log.d("CHRISTIAN", "Falhou salvaRespostas: $t.message")
@@ -93,7 +93,7 @@ class ExecucaoActivity : AppCompatActivity() {
 
     private fun getExecucao(idExecucao: Int?): Execucao {
         var execucao: Execucao = Execucao(null, null, null, emptyList(), null)
-        var call = RetrofitInitializer().Service().getExecucao(idExecucao)
+        var call = RetrofitInitializer().service().getExecucao(idExecucao)
         call.enqueue(object : Callback<Execucao> {
             override fun onFailure(call: Call<Execucao>, t: Throwable) {
                 Log.d("CHRISTIAN", "Falhou getExecucao: $t.message")
@@ -112,7 +112,7 @@ class ExecucaoActivity : AppCompatActivity() {
     }
 
     private fun iniciaExecucao() {
-        var call = RetrofitInitializer().Service().iniciaExecucao(idImageSel)
+        var call = RetrofitInitializer().service().iniciaExecucao(idImageSel)
 
         //var call = RetrofitInitializer().Service().getExecucao(1)
 

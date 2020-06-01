@@ -20,7 +20,7 @@ class RetrofitInitializer {
         return retrofit.create(IDataService::class.java)
     }
 
-    fun Service() : IDataService {
+    fun service() : IDataService {
         return retrofit.create(IDataService::class.java)
     }
 

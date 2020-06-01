@@ -14,7 +14,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.ValorVariavelActivity"></activity>
+        <activity android:name=".view.RegraActivity"></activity>
+        <activity android:name=".view.ValorVariavelActivity" />
         <activity android:name=".view.VariavelActivity" />
         <activity android:name=".view.ListaVariavelAndAddActivity" />
         <activity android:name=".view.ExecucaoActivity" />

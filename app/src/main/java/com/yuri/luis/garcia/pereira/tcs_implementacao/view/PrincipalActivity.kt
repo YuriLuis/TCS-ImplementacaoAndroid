@@ -29,18 +29,27 @@ class PrincipalActivity : AppCompatActivity() {
     private val LOAD_IMAGE_RESULTS = 1
     private var objRetornoImagem: ImageRetorno = ImageRetorno(null, null)
     private lateinit var buttonVariavel : Button
+    private lateinit var btnTesteRegra : Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_principal)
 
         buttonVariavel = findViewById(R.id.btnVariavelTeste)
+        btnTesteRegra = findViewById(R.id.btnRegra)
         clickBotaoAddVariavelTeste()
+        eventoBotaoTesteRegra()
     }
 
     private fun clickBotaoAddVariavelTeste(){
         buttonVariavel.setOnClickListener {
             startActivity(Intent(this, ListaVariavelAndAddActivity::class.java))
+        }
+    }
+
+    fun eventoBotaoTesteRegra(){
+        btnTesteRegra.setOnClickListener{
+            startActivity(Intent(this, RegraActivity::class.java))
         }
     }
 

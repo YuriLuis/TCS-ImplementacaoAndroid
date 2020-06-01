@@ -1,9 +1,6 @@
 package com.yuri.luis.garcia.pereira.tcs_implementacao.api
 
-import com.yuri.luis.garcia.pereira.tcs_implementacao.model.Execucao
-import com.yuri.luis.garcia.pereira.tcs_implementacao.model.ImageRetorno
-import com.yuri.luis.garcia.pereira.tcs_implementacao.model.Variavel
-import com.yuri.luis.garcia.pereira.tcs_implementacao.model.VariavelValor
+import com.yuri.luis.garcia.pereira.tcs_implementacao.model.*
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
@@ -70,4 +67,12 @@ interface IDataService {
     @GET("imagens")
     fun getImagem(): retrofit2.Call<ImageRetorno>
 
+    @GET("regra")
+    fun findAllRegra(): Call<List<Regra>>
+
+    @GET("regra/perguntas")
+    fun findAllPerguntas(): Call<List<Regra>>
+
+    @POST("regra/salvaRegra")
+    fun postRegra(@Body regra: Regra) : Call<Regra>
 }
