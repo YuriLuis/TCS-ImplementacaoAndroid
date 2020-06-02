@@ -4,7 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.ValorVariavelFragment" >
+    tools:context=".view.ValorVariavelActivity" >
+
+    <Button
+        android:id="@+id/buttonExcluirValor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@color/botaoExcluir"
+        android:fadeScrollbars="false"
+        android:text="Excluir"
+        android:textColor="@color/textoBranco"
+        android:visibility="visible"
+        app:layout_constraintEnd_toStartOf="@+id/btnCancelarValor"
+        app:layout_constraintStart_toEndOf="@+id/btnAddValor"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout2" />
 
     <TextView
         android:id="@+id/textView3"
@@ -32,6 +46,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView3">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/textInputValorVariavel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Valor Variavel" />

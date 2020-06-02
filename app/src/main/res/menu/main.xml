@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+    android:id="@+id/cadVariavel"
+    android:title="Variáveis" />
+    <item
+        android:id="@+id/cadRegra"
+        android:title="Features (Regras)" />
+    <item
+        android:id="@+id/carregaImagem"
+        android:title="Carregar Foto"
+        />
+    <item
+        android:id="@+id/foto"
+        android:title="Tirar Foto" />
+    <item
+        android:id="@+id/executaSE"
+        android:title="Iniciar Execução..." />
+</menu>

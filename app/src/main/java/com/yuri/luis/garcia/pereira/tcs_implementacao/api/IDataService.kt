@@ -25,7 +25,13 @@ interface IDataService {
     ): Call<VariavelValor>
 
     @DELETE("variavel/{idVariavel}")
-    fun deleteVariavel(@Path("idVariavel") idVariavel: Int) : Call<Void>
+    fun deleteVariavel(@Path("idVariavel") idVariavel: Int): Call<Void>
+
+    @POST("variavel/deletaValor/{idVariavel}")
+    fun deleteValorVariavel(
+        @Path("idVariavel") idVariavel: Int,
+        @Body variavelValor: VariavelValor
+    ): Call<Void>
 
     @POST("execucao/iniciaExecucao/{idimage}")
     fun iniciaExecucao(@Path("idimage") idimage : Int
@@ -45,15 +51,42 @@ interface IDataService {
     fun getVariavelValor(@Path("id") id : Int?
     ): retrofit2.Call<VariavelValor>
 
+    @GET("foto/{id}")
+    fun getFoto(@Path("id") id : Int?
+    ): retrofit2.Call<Foto>
+
     @Multipart
     @POST("imagens")
-    fun enviaImagem(@Part file: MultipartBody.Part, @Part("file") name: RequestBody): retrofit2.Call<ImageRetorno>
+    fun enviaImagem(@Part file: MultipartBody.Part, @Part("file") name: RequestBody): retrofit2.Call<FotoRetorno>
 
     @GET("imagens")
-    fun getImagem(): retrofit2.Call<ImageRetorno>
+    fun getImagem(): retrofit2.Call<FotoRetorno>
 
     @GET("/execucao/tomadaDecisao/{id}")
     fun getTomadaDecisao(@Path("id") id : Int?
     ): retrofit2.Call<Execucao>
 
+    @GET("regra/{idRegra}")
+    fun RegrafindById(@Path("idRegra") idRegra: Int?): Call<Regra>
+
+    @GET("regra")
+    fun findAllRegra(): Call<List<Regra>>
+
+    @DELETE("regra/{idRegra}")
+    fun deleteRegra(@Path("idRegra") idRegra: Int): Call<Void>
+
+    @GET("regra/perguntas")
+    fun findAllPerguntas(): Call<List<Regra>>
+
+    @POST("regra/salvaRegra")
+    fun postRegra(@Body regra: Regra) : Call<Regra>
+
+    @POST("regra/adicionaItem/{idregra}")
+    fun postRegraItem(@Path("idregra") idregra: Int, @Body item: RegraItem) : Call<RegraItem>
+
+    @POST("regra/deletaItem/{idregra}")
+    fun deleteRegraItem(
+        @Path("idregra") idregra: Int,
+        @Body item: RegraItem
+    ): Call<Void>
 }

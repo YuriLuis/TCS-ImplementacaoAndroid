@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "676247388371",
+    "firebase_url": "https://senactcs-236cb.firebaseio.com",
+    "project_id": "senactcs-236cb",
+    "storage_bucket": "senactcs-236cb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:676247388371:android:7c8015ef81316b07dbd426",
+        "android_client_info": {
+          "package_name": "com.yuri.luis.garcia.pereira.tcs_implementacao"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "676247388371-c07eobfmviag8hd4b250mc3imfp3hecr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.yuri.luis.garcia.pereira.tcs_implementacao",
+            "certificate_hash": "b53c9e95698567a08dd440dbea53f528c45c5e6d"
+          }
+        },
+        {
+          "client_id": "676247388371-ue5ilp2uvbnqtj3ji8cvok5jca2jt30g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCCUcuagvgvWfyzanO62Brh74ktmGy-tUE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "676247388371-ue5ilp2uvbnqtj3ji8cvok5jca2jt30g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

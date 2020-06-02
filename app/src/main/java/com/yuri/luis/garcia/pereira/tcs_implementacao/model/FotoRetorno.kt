@@ -1,6 +1,6 @@
 package com.yuri.luis.garcia.pereira.tcs_implementacao.model
 
-data class ImageRetorno(
+data class FotoRetorno(
     val id_image: Int?,
     val status: String?
 ) {
