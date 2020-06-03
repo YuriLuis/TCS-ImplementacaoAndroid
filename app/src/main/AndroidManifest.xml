@@ -2,7 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.yuri.luis.garcia.pereira.tcs_implementacao">
 
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
+
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
@@ -13,10 +19,21 @@
         android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".view.ResultadoAcitivity"></activity>
+        android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
+        <activity android:name=".view.RegraItemActivity"></activity>
+        <activity android:name=".view.ListaRegrasActivity" />
+        <activity android:name=".view.RegraActivity" />
+        <activity android:name=".view.ListaVariavelAndAddActivity" />
+        <activity android:name=".view.ValorVariavelActivity" />
+        <activity android:name=".view.VariavelActivity" />
+        <activity android:name=".view.CarregarFotoActivity" />
+        <activity android:name=".view.TirarFotoActivity" />
+        <activity android:name=".view.ResultadoAcitivity" />
         <activity android:name=".view.ExecucaoActivity" />
-        <activity android:name=".view.MainActivity">
+        <activity android:name=".view.MainActivity" />
+        <activity
+            android:name=".view.SplashActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

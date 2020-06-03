@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingTop="24dp"
+    tools:context=".view.RegraItemActivity" >
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="30dp"
+        android:fontFamily="cursive"
+        android:text="Regra Item (Condição)"
+        android:textSize="36sp" />
+
+    <TextView
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Conectivo" />
+    <Spinner
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="10dp"
+        android:id="@+id/spConectivo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Variavel" />
+    <Spinner
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="10dp"
+        android:id="@+id/spVariavel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Condicional" />
+    <Spinner
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="10dp"
+        android:id="@+id/spCondicional"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Valor" />
+    <Spinner
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="10dp"
+        android:id="@+id/spValor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:columnCount="4"
+        android:paddingTop="10dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="1"
+            android:layout_columnWeight="1"
+            android:layout_gravity="left"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/btnAddItem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginLeft="32dp"
+                android:layout_marginTop="16dp"
+                android:background="@color/botaoAdd"
+                android:text="Adicionar"
+                android:textColor="@color/textoBranco" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="2"
+            android:layout_columnWeight="1"
+            android:layout_gravity="right"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/buttonExcluirItem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@color/botaoExcluir"
+                android:fadeScrollbars="false"
+                android:text="Excluir"
+                android:textColor="@color/textoBranco"
+                android:visibility="visible"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="3"
+            android:layout_columnWeight="1"
+            android:layout_gravity="right"
+            android:paddingLeft="25dp"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/btnCancelarItem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="32dp"
+                android:layout_marginRight="32dp"
+                android:background="@color/botaoCancelar"
+                android:text="Cancelar"
+                android:textColor="@color/textoBranco"/>
+        </LinearLayout>
+    </GridLayout>
+</LinearLayout>

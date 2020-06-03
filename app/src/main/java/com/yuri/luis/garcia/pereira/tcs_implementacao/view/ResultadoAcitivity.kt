@@ -1,5 +1,6 @@
 package com.yuri.luis.garcia.pereira.tcs_implementacao.view
 
+import android.content.Intent
 import android.graphics.BitmapFactory
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -10,7 +11,7 @@ import androidx.annotation.RequiresApi
 import com.yuri.luis.garcia.pereira.tcs_implementacao.R
 import com.yuri.luis.garcia.pereira.tcs_implementacao.config.RetrofitInitializer
 import com.yuri.luis.garcia.pereira.tcs_implementacao.model.Execucao
-import kotlinx.android.synthetic.main.fragment_result.*
+import kotlinx.android.synthetic.main.activity_resultado_acitivity.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -23,6 +24,7 @@ class ResultadoAcitivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_resultado_acitivity)
+        buttonConfirm.setOnClickListener { confirmar() }
         val param = intent.getStringExtra("idExecucao") ?: "0"
         idExecucaoSel = param.toInt()
         Log.d("CHRISTIAN", "idExecucaoSel: $idExecucaoSel" )
@@ -50,13 +52,18 @@ class ResultadoAcitivity : AppCompatActivity() {
                     //val parsedDate = LocalDateTime.parse(date, DateTimeFormatter.ISO_DATE_TIME)
                     //val formattedDate = parsedDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"))
                     imageViewResult.setImageBitmap(image)
-                    textPercent.text = execucao.percentualAcerto.toString() + " % "
+                    textPercent.text = String.format("%.2f", execucao.percentualAcerto) + " % "
                     //TextDate.text = formattedDate
-                    TextDate.text = execucao.concluido?.substring(0,9) ?: ""
+                    TextDate.text = execucao.concluido?.substring(0,10) ?: ""
                 }
             }
 
         })
         return execucao;
+    }
+
+    fun confirmar() {
+        val i = Intent(this, MainActivity::class.java)
+        startActivity(i)
     }
 }

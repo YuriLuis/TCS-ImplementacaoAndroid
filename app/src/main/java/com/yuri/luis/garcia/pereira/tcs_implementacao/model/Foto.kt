@@ -1,7 +1,7 @@
 package com.yuri.luis.garcia.pereira.tcs_implementacao.model
 
-data class Image(
-    val idImage: Int?,
+data class Foto(
+    val idFoto: Int?,
     val nome: String?,
     val extensao: String?,
     val contornos: Int?,

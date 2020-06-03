@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.VariavelListAndAdd" >
+    tools:context=".view.ListaVariavelAndAddActivity" >
 
 
     <TextView
@@ -40,6 +40,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:clickable="true"
+        android:onClick="eventoClickFloatActionButtonAddVariavel"
         android:src="@drawable/ic_add_24dp"
         app:backgroundTint="@color/botaoAdd"
         app:layout_constraintBottom_toBottomOf="parent"
