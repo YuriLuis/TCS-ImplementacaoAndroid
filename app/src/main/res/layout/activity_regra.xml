@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
+    android:orientation="vertical"
+    android:paddingLeft="24dp"
+    android:paddingTop="24dp"
+    android:paddingRight="24dp"
     tools:context=".view.RegraActivity">
 
     <TextView
@@ -12,24 +17,19 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:fontFamily="cursive"
-        android:text="Adicionar Feature (Regra)"
-        android:textSize="36sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout"
-        android:layout_width="0dp"
+        android:gravity="center"
+        android:textAlignment="center"
+        android:text="Regra"
+        android:textSize="36sp" />
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2">
+        android:orientation="horizontal">
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_marginTop="16dp"
+        android:id="@+id/textInputLayout"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/inputTextNomeRegra"
@@ -38,85 +38,155 @@
             android:hint="Nome Regra" />
     </com.google.android.material.textfield.TextInputLayout>
 
+    <TextView
+        android:layout_marginTop="16dp"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:text="Ordem" />
+
+    <EditText
+        android:id="@+id/et_ordem"
+        android:layout_width="50dp"
+        android:layout_height="match_parent"
+        android:inputType="number"/>
+    </LinearLayout>
+
     <RadioGroup
         android:id="@+id/radioGroupOp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout">
+        android:orientation="horizontal">
 
     </RadioGroup>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="bottom|center_horizontal"
+        android:orientation="vertical">
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:columnCount="4">
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Condições"
+                android:layout_column="2"
+                android:layout_columnWeight="2"
+                android:layout_gravity="center"
+                android:textStyle="bold" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/floatingActionButtonAddItem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="3"
+                android:layout_columnWeight="1"
+                android:layout_gravity="right"
+                android:clickable="true"
+                android:src="@drawable/ic_add_24dp"
+                app:backgroundTint="@color/botaoAdd"/>
+        </GridLayout>
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewRegra"
-        android:layout_width="391dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonAddRegra" />
-
-    <Button
-        android:id="@+id/buttonAddRegra"
-        android:layout_width="wrap_content"
+        android:layout_width="380dp"
+        android:layout_marginTop="5dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:background="@color/botaoAdd"
-        android:text="Adicionar "
-        android:textColor="@color/textoBranco"
-        app:layout_constraintEnd_toStartOf="@+id/buttonExcluir"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radioGroupOp" />
+        android:layout_marginBottom="16dp"/>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButtonAddItem"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        android:layout_marginRight="24dp"
-        android:layout_marginBottom="24dp"
-        android:clickable="true"
-        android:src="@drawable/ic_add_24dp"
-        app:backgroundTint="@color/botaoAdd"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:gravity="bottom|center_horizontal"
+        android:orientation="vertical">
 
-    <Button
-        android:id="@+id/buttonExcluir"
-        android:layout_width="wrap_content"
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:columnCount="4">
+
+            <TextView
+                android:id="@+id/textViewConclusao"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Conclusões"
+                android:layout_column="2"
+                android:layout_columnWeight="2"
+                android:layout_gravity="center"
+                android:textStyle="bold" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/floatingActionButtonAddItemResultado"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="3"
+                android:layout_columnWeight="1"
+                android:layout_gravity="right"
+                android:clickable="true"
+                android:src="@drawable/ic_add_24dp"
+                app:backgroundTint="@color/botaoAdd"/>
+        </GridLayout>
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewRegraResultado"
+        android:layout_width="380dp"
+        android:layout_marginTop="5dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:background="@color/botaoExcluir"
-        android:fadeScrollbars="false"
-        android:text="Excluir"
-        android:textColor="@color/textoBranco"
-        android:visibility="visible"
-        app:layout_constraintEnd_toStartOf="@+id/buttonCancelar"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/buttonAddRegra"
-        app:layout_constraintTop_toBottomOf="@+id/radioGroupOp" />
+        android:layout_marginBottom="16dp"/>
 
-    <Button
-        android:id="@+id/buttonCancelar"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:background="@color/botaoCancelar"
-        android:text="Cancelar"
-        android:textColor="@color/textoBranco"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/buttonExcluir"
-        app:layout_constraintTop_toBottomOf="@+id/radioGroupOp" />
+        android:gravity="bottom|center_horizontal"
+        android:orientation="horizontal">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:columnCount="4">
+
+            <Button
+                android:id="@+id/buttonAddRegra"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/botaoAdd"
+                android:text="Adicionar "
+                android:layout_column="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="center"
+                android:textColor="@color/textoBranco"/>
+
+            <Button
+                android:id="@+id/buttonExcluir"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/botaoExcluir"
+                android:fadeScrollbars="false"
+                android:text="Excluir"
+                android:layout_column="2"
+                android:layout_columnWeight="2"
+                android:layout_gravity="center"
+                android:textColor="@color/textoBranco"
+                android:visibility="visible" />
+
+            <Button
+                android:id="@+id/buttonCancelar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/botaoCancelar"
+                android:text="Cancelar"
+                android:layout_column="3"
+                android:layout_columnWeight="3"
+                android:layout_gravity="center"
+                android:textColor="@color/textoBranco" />
+
+        </GridLayout>
+    </LinearLayout>
+
+</LinearLayout>

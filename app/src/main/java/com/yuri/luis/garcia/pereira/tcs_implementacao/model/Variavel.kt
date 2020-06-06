@@ -11,4 +11,8 @@ data class Variavel (
 
         constructor(): this(null,
         "", null, emptyList())
+
+    public override fun toString() : String {
+        return this.nome
+    }
 }

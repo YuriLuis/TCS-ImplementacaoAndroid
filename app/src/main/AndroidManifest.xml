@@ -20,7 +20,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
-        <activity android:name=".view.RegraItemActivity"></activity>
+        <activity android:name=".view.RegraItemResultadoActivity"></activity>
+        <activity android:name=".view.RegraItemActivity" />
         <activity android:name=".view.ListaRegrasActivity" />
         <activity android:name=".view.RegraActivity" />
         <activity android:name=".view.ListaVariavelAndAddActivity" />

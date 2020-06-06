@@ -50,7 +50,7 @@
                 android:id="@+id/textConcluido"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Concluido dia:"
+                android:text="Concluído:"
                 android:textSize="18dp"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -131,6 +131,8 @@
                 android:layout_column="3"
                 android:layout_columnWeight="1"
                 android:layout_gravity="right"
+                android:background="@color/botaoAdd"
+                android:textColor="@color/textoBranco"
                 android:text="Fechar" />
         </GridLayout>
     </LinearLayout>

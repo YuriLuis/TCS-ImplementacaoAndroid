@@ -49,6 +49,8 @@
                 android:layout_column="1"
                 android:layout_columnWeight="1"
                 android:layout_gravity="left"
+                android:background="@color/botaoExcluir"
+                android:textColor="@color/textoBranco"
                 android:text="Tirar Foto" />
 
             <Button
@@ -58,6 +60,8 @@
                 android:layout_column="3"
                 android:layout_columnWeight="1"
                 android:layout_gravity="right"
+                android:background="@color/botaoAdd"
+                android:textColor="@color/textoBranco"
                 android:text="Confirmar" />
         </GridLayout>
     </LinearLayout>

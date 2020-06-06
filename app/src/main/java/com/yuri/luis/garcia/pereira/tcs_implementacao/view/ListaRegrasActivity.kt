@@ -36,17 +36,10 @@ class ListaRegrasActivity : AppCompatActivity() {
         atualizaRecyclerViewRegras()
     }
 
-    fun eventoClickFloatActionButtonAddRegra(view: View){
-        startActivity(Intent(this, RegraActivity::class.java))
-    }
-
     private fun atualizaRecyclerViewRegras() {
         var call = RetrofitInitializer().variavelService().findAllRegra()
         call.enqueue(object : Callback<List<Regra>> {
-            override fun onFailure(call: Call<List<Regra>>, t: Throwable) {
-
-            }
-
+            override fun onFailure(call: Call<List<Regra>>, t: Throwable) {  }
             override fun onResponse(
                 call: Call<List<Regra>>,
                 response: Response<List<Regra>>
@@ -94,8 +87,16 @@ class ListaRegrasActivity : AppCompatActivity() {
             startActivity(
                 Intent(this, RegraActivity::class.java)
                     .putExtra("regra", regra)
+                    .putExtra("novo", false)
             )
         }
+    }
+
+    fun eventoClickFloatActionButtonAddRegra(view: View) {
+        startActivity(
+                Intent(this, RegraActivity::class.java)
+                    .putExtra("regra", Regra())
+                    .putExtra("novo", true) )
     }
 
     private fun configuraAdapter(list: List<Regra>) {

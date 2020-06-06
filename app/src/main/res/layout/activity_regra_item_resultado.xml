@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:paddingTop="24dp"
-    tools:context=".view.RegraItemActivity" >
+    tools:context=".view.RegraItemResultadoActivity" >
 
     <TextView
         android:id="@+id/textView3"
@@ -14,7 +14,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginLeft="30dp"
         android:fontFamily="cursive"
-        android:text="Item - Condição"
+        android:text="Item - Conclusão"
         android:textSize="36sp" />
 
     <TextView
@@ -22,42 +22,24 @@
         android:layout_marginLeft="15dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Conectivo" />
-    <Spinner
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="10dp"
-        android:id="@+id/spConectivo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-    <TextView
-        android:layout_marginTop="5dp"
-        android:layout_marginLeft="15dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:text="Variavel" />
     <Spinner
         android:layout_marginLeft="15dp"
         android:layout_marginRight="10dp"
-        android:id="@+id/spVariavel"
+        android:id="@+id/spVariavelResultado"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
     <TextView
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="20dp"
         android:layout_marginLeft="15dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Condicional" />
-    <Spinner
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="10dp"
-        android:id="@+id/spCondicional"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:textSize="25sp"
+        android:text=" = " />
 
     <TextView
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="20dp"
         android:layout_marginLeft="15dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -65,9 +47,24 @@
     <Spinner
         android:layout_marginLeft="15dp"
         android:layout_marginRight="10dp"
-        android:id="@+id/spValor"
+        android:id="@+id/spValorResultado"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+
+    <TextView
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Fator de Confiaça" />
+
+    <EditText
+        android:id="@+id/et_fatorConfiaca"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="10dp"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:inputType="number"/>
 
     <GridLayout
         android:layout_width="match_parent"
@@ -84,7 +81,7 @@
             android:orientation="vertical">
 
             <Button
-                android:id="@+id/btnAddItem"
+                android:id="@+id/btnAddItemResultado"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
@@ -104,7 +101,7 @@
             android:orientation="vertical">
 
             <Button
-                android:id="@+id/buttonExcluirItem"
+                android:id="@+id/buttonExcluirItemResultado"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -124,7 +121,7 @@
             android:orientation="vertical">
 
             <Button
-                android:id="@+id/btnCancelarItem"
+                android:id="@+id/btnCancelarItemResultado"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"

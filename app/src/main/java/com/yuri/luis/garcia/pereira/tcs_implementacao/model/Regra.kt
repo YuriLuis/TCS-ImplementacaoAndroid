@@ -3,12 +3,13 @@ package com.yuri.luis.garcia.pereira.tcs_implementacao.model
 import java.io.Serializable
 
 data class Regra(
-    val idRegra: Int?,
-    val nome: String,
+    var idRegra: Int?,
+    var ordem: Int,
+    var nome: String,
     val dataRegra: String?,
-    val itens: List<RegraItem>?,
-    val resultados: List<RegraItemResultado>?
+    val itens: MutableList<RegraItem>?,
+    val resultados: MutableList<RegraItemResultado>?
 ): Serializable {
 
-    constructor(): this(null, "", null,  emptyList(),  emptyList())
+    constructor(): this(null, 0,"", null,  mutableListOf(),  mutableListOf())
 }

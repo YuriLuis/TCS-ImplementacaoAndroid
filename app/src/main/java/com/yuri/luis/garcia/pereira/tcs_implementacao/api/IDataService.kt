@@ -89,4 +89,13 @@ interface IDataService {
         @Path("idregra") idregra: Int,
         @Body item: RegraItem
     ): Call<Void>
+
+    @POST("regra/adicionaItemResultado/{idregra}")
+    fun postRegraItemResultado(@Path("idregra") idregra: Int, @Body item: RegraItemResultado) : Call<RegraItemResultado>
+
+    @POST("regra/deletaItemResultado/{idregra}")
+    fun deleteRegraItemResultado(
+        @Path("idregra") idregra: Int,
+        @Body item: RegraItemResultado
+    ): Call<Void>
 }

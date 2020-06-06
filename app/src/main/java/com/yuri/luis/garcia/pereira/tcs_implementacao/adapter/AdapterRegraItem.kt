@@ -32,13 +32,13 @@ class AdapterRegraItem(private val items: MutableList<RegraItem>) :
         fun bind(item: RegraItem) {
             var v: String = ""
             if (item.conectivo == 0) {
-                v = v + "SE (";
+                v = v + " SE  (";
             }
             if (item.conectivo == 1) {
-                v = v + "E (";
+                v = v + " E    (";
             }
             if (item.conectivo == 2) {
-                v = v + "OU (";
+                v = v + " OU (";
             }
             v = v + item.variavel?.nome + " " + item.condicional + " " + item.variavelValor?.valor +")"
             tvItem.text = v

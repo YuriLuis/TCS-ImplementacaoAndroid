@@ -10,4 +10,8 @@ data class VariavelValor(
 
     constructor(): this(null,
         "", null)
+
+    public override fun toString() : String {
+        return this.valor
+    }
 }

@@ -6,7 +6,7 @@
     android:title="Variáveis" />
     <item
         android:id="@+id/cadRegra"
-        android:title="Features (Regras)" />
+        android:title="Regras" />
     <item
         android:id="@+id/carregaImagem"
         android:title="Carregar Foto"
