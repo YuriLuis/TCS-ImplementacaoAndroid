@@ -98,4 +98,19 @@ interface IDataService {
         @Path("idregra") idregra: Int,
         @Body item: RegraItemResultado
     ): Call<Void>
+
+    @POST("interface/salvaInterface")
+    fun postInterface(@Body objInterface: Interface) : Call<Interface>
+
+    @GET("interface")
+    fun findAllInterface(): Call<List<Interface>>
+
+    @GET("interface/{id}")
+    fun findByIdInterface(@Path("id") id: Int?): Call<Interface>
+
+    @GET("interface/variavel/{idVariavel}")
+    fun findInterfaceVariavel(@Path("idVariavel") idVariavel: Int?): Call<List<Variavel>>
+
+    @DELETE("interface/{id}")
+    fun deleteInterface(@Path("id") id: Int): Call<Void>
 }

@@ -7,9 +7,8 @@ data class RegraItem(var idRegraItem: Int?,
                      var variavel: Variavel?,
                      var condicional: String,
                      var variavelValor: VariavelValor?,
-                     var pergunta: String,
                      var regra: Regra?
 ) : Serializable {
 
-    constructor(): this(null, 0, null, "", null, "", null)
+    constructor(): this(null, 0, null, "", null,  null)
 }

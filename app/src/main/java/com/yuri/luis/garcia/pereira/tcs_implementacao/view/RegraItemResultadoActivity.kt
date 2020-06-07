@@ -64,23 +64,22 @@ class RegraItemResultadoActivity : AppCompatActivity() {
             override fun onNothingSelected(parent: AdapterView<*>) {  }
         }
         verificaSeRegraEhEditadaOuNova()
-        setaValores()
     }
 
     private fun setaValores() {
-        /*if (regraItem != null) {
-            spinnerConectivo.setSelection(regraItem.conectivo)
-            val inde = this.variaveis.indexOf(regraItem.variavel!!)
-            //spinnerVariavel.setSelection(this.variaveis.indexOf(regraItem.variavel!!))
-            //regraItem.variavel?.idVariavel?.let { spinnerVariavel.setSelection(it) }
-            spinnerCondicional.setSelection(getIndexCondicional(regraItem.condicional))
-            regraItem.variavelValor?.idVariavelValor?.let { spinnerValor.setSelection(it) }
-        } else {
-            spinnerConectivo.setSelection(-1, true)
-            spinnerVariavel.setSelection(-1, true)
-            spinnerCondicional.setSelection(-1, true)
-            spinnerValor.setSelection(-1, true)
-        }*/
+        spinnerVariavel.setSelection(-1)
+        spinnerValor.setSelection(-1)
+        editTextFatorConfianca.setText("")
+        if (regraItem != null) {
+            var index = this.variaveis.indexOf(regraItem.variavel!!)
+            spinnerVariavel.setSelection(index)
+            preencheValoresVariavel()
+
+            index = regraItem.variavel!!.valores.indexOf(regraItem.variavelValor!!)
+            spinnerValor.setSelection(index)
+
+            editTextFatorConfianca.setText(regraItem.fatorConfianca.toString())
+        }
     }
 
     private fun configAdapterVariavel(variaveis: List<Variavel>): ArrayAdapter<Variavel> {
@@ -104,6 +103,7 @@ class RegraItemResultadoActivity : AppCompatActivity() {
                 if (response.isSuccessful) {
                     variaveis = response.body()!!
                     spinnerVariavel.adapter = variaveis?.let { configAdapterVariavel(it) }
+                    setaValores()
                 }
             }
         })

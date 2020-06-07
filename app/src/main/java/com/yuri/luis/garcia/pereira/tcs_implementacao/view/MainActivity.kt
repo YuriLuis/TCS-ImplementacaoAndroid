@@ -38,6 +38,7 @@ class MainActivity : AppCompatActivity() {
         when(item?.itemId){
             R.id.cadVariavel -> selecao = "cadVariavel"
             R.id.cadRegra -> selecao ="CadRegra"
+            R.id.cadInterface -> selecao ="CadInterface"
             R.id.carregaImagem -> selecao = "carregaImagem"
             R.id.foto -> selecao ="Foto"
             R.id.executaSE -> selecao = "executaSE"
@@ -58,6 +59,10 @@ class MainActivity : AppCompatActivity() {
                         }.show()
                 }
             }
+        }
+        if (selecao == "CadInterface") {
+            val i = Intent(this, ListaInterfaceActivity::class.java)
+            startActivity(i)
         }
 
         if (selecao == "Foto"){

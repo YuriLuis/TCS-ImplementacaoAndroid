@@ -94,9 +94,9 @@ class ListaRegrasActivity : AppCompatActivity() {
 
     fun eventoClickFloatActionButtonAddRegra(view: View) {
         startActivity(
-                Intent(this, RegraActivity::class.java)
-                    .putExtra("regra", Regra())
-                    .putExtra("novo", true) )
+            Intent(this, RegraActivity::class.java)
+                .putExtra("regra", Regra())
+                .putExtra("novo", true) )
     }
 
     private fun configuraAdapter(list: List<Regra>) {

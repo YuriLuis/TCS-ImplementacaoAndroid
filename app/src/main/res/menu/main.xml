@@ -8,6 +8,9 @@
         android:id="@+id/cadRegra"
         android:title="Regras" />
     <item
+        android:id="@+id/cadInterface"
+        android:title="Interface" />
+    <item
         android:id="@+id/carregaImagem"
         android:title="Carregar Foto"
         />

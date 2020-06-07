@@ -42,7 +42,6 @@ class AdapterRegraItemResultado(private val items: MutableList<RegraItemResultad
             else {
                 v = v + "               ("
             }
-            Log.d("CHRISTIAN", "icont: " + index_position)
             v = v + item.variavel?.nome + " = " + item.variavelValor?.valor +" CNF " + String.format("%.2f", item.fatorConfianca) +"%)"
             tvItem.text = v
         }
