@@ -1,9 +1,11 @@
 package com.yuri.luis.garcia.pereira.tcs_implementacao.view
 
+import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.LinearLayout
@@ -12,6 +14,9 @@ import androidx.appcompat.app.AlertDialog
 import com.yuri.luis.garcia.pereira.tcs_implementacao.R
 import com.yuri.luis.garcia.pereira.tcs_implementacao.config.RetrofitInitializer
 import com.yuri.luis.garcia.pereira.tcs_implementacao.model.Execucao
+import com.yuri.luis.garcia.pereira.tcs_implementacao.model.Interface
+import com.yuri.luis.garcia.pereira.tcs_implementacao.model.Variavel
+import com.yuri.luis.garcia.pereira.tcs_implementacao.model.VariavelValor
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -19,8 +24,13 @@ import retrofit2.Response
 class ExecucaoActivity : AppCompatActivity() {
     private lateinit var objExecucao: Execucao
     val checkBoxs: MutableList<String> = mutableListOf<String>()
-    val checkBoxsSelec: MutableList<String> = mutableListOf<String>()
     var idImageSel: Int = 0
+
+    var perguntas: MutableList<Interface> = mutableListOf<Interface>()
+    var indexPergunta: Int = 0
+
+    private lateinit var buttonVoltar: Button
+    private lateinit var buttonSeguir: Button
 
 
     private fun abreActivityResultado() {
@@ -28,6 +38,16 @@ class ExecucaoActivity : AppCompatActivity() {
         Log.d("CHRISTIAN", "**** Enviando: " + objExecucao.idExecucao)
          i.putExtra("idExecucao", objExecucao.idExecucao.toString())
          startActivity(i)
+    }
+
+    private fun getPerguntaVariavel(variavel: Variavel) : String {
+        var retorno = ""
+        for (i in perguntas) {
+            if (i.variavel!!.idVariavel == variavel.idVariavel) {
+               retorno = i.pergunta
+            }
+        }
+        return retorno
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,17 +59,24 @@ class ExecucaoActivity : AppCompatActivity() {
         idImageSel = param.toInt()
         Log.d("CHRISTIAN", "idImageSel: $idImageSel")
 
-        val btn = findViewById<Button>(R.id.bt_Seguinte)
-        btn.setOnClickListener {
+        buttonVoltar = findViewById<Button>(R.id.bt_voltar)
+        buttonVoltar.visibility = View.INVISIBLE
+        buttonVoltar.setOnClickListener {
+            perguntaAnterior()
+        }
+        buttonSeguir = findViewById<Button>(R.id.bt_Seguinte)
+        buttonSeguir.setOnClickListener {
             if (validate()) {
-                salvaRespostas()
+                proximaPergunta()
             }
         }
         iniciaExecucao()
     }
 
-    private fun salvaRespostas() {
-        var call = RetrofitInitializer().Service().adicionaRespostas(objExecucao?.idExecucao!!, checkBoxsSelec)
+    private fun postRespostas() {
+
+        var call = RetrofitInitializer().Service().adicionaRespostas(objExecucao.idExecucao!!, getIdRespostas())
+        //var call = RetrofitInitializer().Service().salvaExecucao(objExecucao)
         call.enqueue(object : Callback<Execucao> {
             override fun onFailure(call: Call<Execucao>, t: Throwable) {
                 Log.d("CHRISTIAN", "Falhou salvaRespostas: $t.message")
@@ -68,13 +95,99 @@ class ExecucaoActivity : AppCompatActivity() {
         })
     }
 
+    private fun getIdRespostas(): MutableList<String> {
+        var lista: MutableList<String> = mutableListOf<String>()
+        for (regra in objExecucao.regras) {
+            for (resposta in regra.respostas) {
+                val pergunta = getPerguntaVariavel(resposta.regraItem?.variavel!!)
+                if (pergunta.trim().length > 0) {
+                    lista.add(resposta.resposta!!.idVariavelValor.toString())
+                }
+                else
+                {
+                    lista.add("-1")
+                }
+            }
+        }
+        return lista
+    }
+
+    private fun salvaResposta(index: Int) {
+        var _index: Int = -1
+        var respostaValor: VariavelValor? = null
+        for (regra in objExecucao.regras) {
+            for (resposta in regra.respostas) {
+                val pergunta = getPerguntaVariavel(resposta.regraItem?.variavel!!)
+                if (pergunta.trim().length > 0) {
+                    _index += 1
+                    if (_index == index) {
+                        val linearLayout = findViewById<LinearLayout>(R.id.layoutRadios)
+                        checkBoxs.forEach {
+                            val ck = linearLayout.findViewById<CheckBox>(it.toInt())
+                            if (ck.isChecked) {
+                                for (valor in resposta.regraItem?.variavel!!.valores) {
+                                    if (valor.idVariavelValor == ck.id) {
+                                        respostaValor = valor
+                                    }
+                                }
+                            }
+                        }
+                        resposta.resposta = respostaValor
+                        respostaValor = null
+                    }
+                }
+            }
+        }
+    }
+
+    private fun carregaPerguntas(index: Int) {
+        var pergunta: String = ""
+        val linearLayout = findViewById<LinearLayout>(R.id.layoutRadios)
+
+        linearLayout.removeAllViews()
+        checkBoxs.clear()
+
+        val textViewPergunta = TextView(this)
+        linearLayout.addView(textViewPergunta)
+
+        buttonVoltar.visibility = View.INVISIBLE
+        if (index > 0) {
+            buttonVoltar.visibility = View.VISIBLE
+        }
+
+        Log.d("CHRISTIAN", "Carregando as perguntas...")
+        var _index: Int = -1
+        for (regra in objExecucao.regras) {
+            for (resposta in regra.respostas) {
+                pergunta = getPerguntaVariavel(resposta.regraItem?.variavel!!)
+                if (pergunta.trim().length > 0) {
+                    _index += 1
+                    if (_index == index) {
+                        textViewPergunta.text = pergunta
+                        for (valor in resposta.regraItem?.variavel!!.valores) {
+                            val checkBox = CheckBox(this)
+                            checkBox.text = valor?.valor
+                            checkBox.id = valor?.idVariavelValor!!.toInt()
+
+                            if (resposta.resposta != null) {
+                                checkBox.isChecked = (resposta!!.resposta!!.idVariavelValor == valor?.idVariavelValor!!)
+                            }
+
+                            linearLayout.addView(checkBox)
+                            checkBoxs.add(checkBox.id.toString())
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     private fun validate(): Boolean {
         var result = false
         val linearLayout = findViewById<LinearLayout>(R.id.layoutRadios)
         checkBoxs.forEach {
             val ck = linearLayout.findViewById<CheckBox>(it.toInt())
             if (ck.isChecked) {
-                checkBoxsSelec.add(ck.id.toString())
                 Log.d("CHRISTIAN", "CheckID: " + it.toString())
                 result = true
             }
@@ -90,83 +203,75 @@ class ExecucaoActivity : AppCompatActivity() {
         return result
     }
 
-    private fun getExecucao(idExecucao: Int?): Execucao {
-        var execucao: Execucao = Execucao(null, null, null, emptyList(), null,null,null)
-        var call = RetrofitInitializer().Service().getExecucao(idExecucao)
-        call.enqueue(object : Callback<Execucao> {
-            override fun onFailure(call: Call<Execucao>, t: Throwable) {
-                Log.d("CHRISTIAN", "Falhou getExecucao: $t.message")
-            }
-
-            override fun onResponse(call: Call<Execucao>, response: Response<Execucao>) {
-                Log.d("CHRISTIAN", "Retornou getExecucao: $response.isSuccessful")
-                if (response.isSuccessful) {
-                    execucao = response.body()!!
-                    Log.d("CHRISTIAN", "$execucao")
-                }
-            }
-
-        })
-        return execucao;
-    }
-
     private fun iniciaExecucao() {
         var call = RetrofitInitializer().Service().iniciaExecucao(idImageSel)
-
-        //var call = RetrofitInitializer().Service().getExecucao(1)
-
         call.enqueue(object : Callback<Execucao> {
             override fun onFailure(call: Call<Execucao>, t: Throwable) {
                 Log.d("CHRISTIAN", "Falhou Execucao: $t.message")
             }
-
             override fun onResponse(call: Call<Execucao>, response: Response<Execucao>) {
                 Log.d("CHRISTIAN", response.isSuccessful.toString())
                 if (response.isSuccessful) {
                     objExecucao = response.body()!!
                     Log.d("CHRISTIAN", "Execucao(1): ${objExecucao.idExecucao}")
-                    carregaPerguntas()
+                    carregaInterfaces()
                 }
             }
         })
     }
 
-    private fun carregaPerguntas() {
-        val linearLayout = findViewById<LinearLayout>(R.id.layoutRadios)
-        val textViewPergunta = TextView(this)
-        textViewPergunta.text = "Quais sintomas está ocorrendo nas folhas?"
-        linearLayout.addView(textViewPergunta)
-        Log.d("CHRISTIAN", "Carregando as regras...")
-        for (regra in objExecucao.regras) {
-            for (resposta in regra.respostas) {
-                var valor = resposta.regraItem?.variavelValor
-                val checkBox = CheckBox(this)
-
-                checkBox.text = valor?.valor
-                checkBox.id = valor?.idVariavelValor!!.toInt()
-                if (objExecucao.image != null) {
-                    if ((objExecucao.image!!.contornos!! > 0) && (objExecucao.image!!.manchas!! > 1) && (valor?.idVariavelValor!!.toInt() == 2)) {
-                        checkBox.isChecked = true
-                        checkBox.isEnabled = false
-                        checkBox.text = valor?.valor + " (Identificado)"
-                    }
+    private fun carregaInterfaces() {
+        var call = RetrofitInitializer().Service().findAllInterface()
+        call.enqueue(object : Callback<List<Interface>> {
+            override fun onFailure(call: Call<List<Interface>>, t: Throwable) {
+                Log.d("CHRISTIAN", "Falhou carregaInterfaces: $t.message")
+            }
+            override fun onResponse(call: Call<List<Interface>>, response: Response<List<Interface>>) {
+                Log.d("CHRISTIAN", response.isSuccessful.toString())
+                if (response.isSuccessful) {
+                    perguntas = response.body()!! as MutableList<Interface>
+                    indexPergunta = 0
+                    carregaPerguntas(indexPergunta)
                 }
-                linearLayout.addView(checkBox)
-                checkBoxs.add(checkBox.id.toString())
             }
+        })
+    }
+
+    private fun perguntaAnterior() {
+        if (indexPergunta == 0) { }
+        else {
+            salvaResposta(indexPergunta)
+            indexPergunta -= 1
+            carregaPerguntas(indexPergunta)
         }
-        val checkBox = CheckBox(this)
-        checkBox.text = "Não consigo ter certeza"
-        checkBox.id = 1
-        if (objExecucao.image != null) {
-            if ((objExecucao.image!!.contornos!! > 0) && (objExecucao.image!!.manchas!! > 1)) {
-            } else {
-                linearLayout.addView(checkBox)
-                checkBoxs.add(checkBox.id.toString())
+    }
+
+    private fun finalizaProcesso() {
+        val alertDialog: AlertDialog? =this@ExecucaoActivity?.let {
+            val builder = AlertDialog.Builder(it)
+            builder.apply {
+                setPositiveButton("Sim",
+                    DialogInterface.OnClickListener { dialog, id ->
+                        postRespostas()
+                    })
+                setNegativeButton("Não",
+                    DialogInterface.OnClickListener { dialog, id ->
+                    })
             }
-        } else {
-            linearLayout.addView(checkBox)
-            checkBoxs.add(checkBox.id.toString())
+            builder.setMessage("Deseja processar as informações ?")
+            builder.create()
+            builder.show()
+        }
+    }
+
+    private fun proximaPergunta() {
+        salvaResposta(indexPergunta)
+        if (indexPergunta+1 >= perguntas.size) {
+            finalizaProcesso()
+        }
+        else {
+            indexPergunta += 1
+            carregaPerguntas(indexPergunta)
         }
     }
 

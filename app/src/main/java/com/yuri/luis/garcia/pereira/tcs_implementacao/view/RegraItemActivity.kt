@@ -90,22 +90,24 @@ class RegraItemActivity : AppCompatActivity() {
         verificaSeRegraEhEditadaOuNova()
     }
 
-    private fun setaValores() {
+    private fun preencheCampos() {
         spinnerConectivo.setSelection(-1)
         spinnerVariavel.setSelection(-1)
         spinnerCondicional.setSelection(-1)
         spinnerValor.setSelection(-1)
-        if (regraItem != null) {
+        if ((regraItem != null) && (!novoItem)) {
             spinnerConectivo.setSelection(regraItem.conectivo)
-
-            var index = this.variaveis.indexOf(regraItem.variavel!!)
-            spinnerVariavel.setSelection(index)
-            preencheValoresVariavel()
-
             spinnerCondicional.setSelection(getIndexCondicional(regraItem.condicional))
 
-            index = regraItem.variavel!!.valores.indexOf(regraItem.variavelValor!!)
-            spinnerValor.setSelection(index)
+            val indexVariavel = this.variaveis.indexOf(regraItem.variavel!!)
+            spinnerVariavel.setSelection(indexVariavel)
+        }
+    }
+
+    private fun setaValores() {
+        if ((regraItem != null) && (!novoItem)) {
+            val indexValor = regraItem.variavel!!.valores.indexOf(regraItem.variavelValor!!)
+            spinnerValor.setSelection(indexValor)
         }
     }
 
@@ -130,7 +132,7 @@ class RegraItemActivity : AppCompatActivity() {
                 if (response.isSuccessful) {
                     variaveis = response.body()!!
                     spinnerVariavel.adapter = variaveis?.let { configAdapterVariavel(it) }
-                    setaValores()
+                    preencheCampos()
                 }
             }
         })
@@ -143,6 +145,7 @@ class RegraItemActivity : AppCompatActivity() {
             spinnerValor.adapter = variavel?.let {
                 configAdapterValoresVariavel(variavel.valores)
             }
+            setaValores()
         }
     }
 

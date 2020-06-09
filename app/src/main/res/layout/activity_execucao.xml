@@ -25,14 +25,52 @@
 
     </LinearLayout>
 
-
-    <Button
-        android:id="@+id/bt_Seguinte"
-        android:layout_width="wrap_content"
+    <GridLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="24dp"
-        android:background="@color/botaoAdd"
-        android:textColor="@color/textoBranco"
-        android:text="Finalizar..." />
+        android:columnCount="4"
+        android:paddingTop="10dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="1"
+            android:layout_columnWeight="1"
+            android:layout_gravity="left"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/bt_voltar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginLeft="32dp"
+                android:layout_marginTop="16dp"
+                android:background="@color/botaoExcluir"
+                android:text="Voltar"
+                android:textColor="@color/textoBranco" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="3"
+            android:layout_columnWeight="1"
+            android:layout_gravity="right"
+            android:paddingLeft="25dp"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/bt_Seguinte"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="32dp"
+                android:layout_marginRight="32dp"
+                android:background="@color/botaoAdd"
+                android:text="Próxima"
+                android:textColor="@color/textoBranco"/>
+        </LinearLayout>
+    </GridLayout>
+
 </LinearLayout>

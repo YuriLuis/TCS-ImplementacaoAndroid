@@ -4,7 +4,7 @@ data class ExecucaoRegraResposta(
     val idExecucaoRegraResposta: Int?,
     val regraItem: RegraItem?,
     val execucaoRegra: ExecucaoRegra?,
-    val resposta: VariavelValor?,
+    var resposta: VariavelValor?,
     val acertou: Boolean?
 ) {
 

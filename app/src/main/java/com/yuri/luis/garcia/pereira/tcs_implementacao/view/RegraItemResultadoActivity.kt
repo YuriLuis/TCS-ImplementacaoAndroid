@@ -66,19 +66,22 @@ class RegraItemResultadoActivity : AppCompatActivity() {
         verificaSeRegraEhEditadaOuNova()
     }
 
-    private fun setaValores() {
+    private fun preencheCampos() {
         spinnerVariavel.setSelection(-1)
         spinnerValor.setSelection(-1)
         editTextFatorConfianca.setText("")
-        if (regraItem != null) {
+        if ((regraItem != null) && (!novoItem)) {
+            editTextFatorConfianca.setText(regraItem.fatorConfianca.toString())
+
             var index = this.variaveis.indexOf(regraItem.variavel!!)
             spinnerVariavel.setSelection(index)
-            preencheValoresVariavel()
+        }
+    }
 
-            index = regraItem.variavel!!.valores.indexOf(regraItem.variavelValor!!)
-            spinnerValor.setSelection(index)
-
-            editTextFatorConfianca.setText(regraItem.fatorConfianca.toString())
+    private fun setaValores() {
+        if ((regraItem != null) && (!novoItem)) {
+            val indexValor = regraItem.variavel!!.valores.indexOf(regraItem.variavelValor!!)
+            spinnerValor.setSelection(indexValor)
         }
     }
 
@@ -103,7 +106,7 @@ class RegraItemResultadoActivity : AppCompatActivity() {
                 if (response.isSuccessful) {
                     variaveis = response.body()!!
                     spinnerVariavel.adapter = variaveis?.let { configAdapterVariavel(it) }
-                    setaValores()
+                    preencheCampos()
                 }
             }
         })
@@ -116,6 +119,7 @@ class RegraItemResultadoActivity : AppCompatActivity() {
             spinnerValor.adapter = variavel?.let {
                 configAdapterValoresVariavel(variavel.valores)
             }
+            setaValores()
         }
     }
 

@@ -65,7 +65,7 @@ class InterfaceActivity : AppCompatActivity() {
     private fun setaValores() {
         spinnerVariavel.setSelection(-1)
         editTextPergunta.setText("")
-        if (objInterface != null) {
+        if ((objInterface != null)  && (!novoItem)) {
             if (objInterface.variavel != null) {
                 val ind = this.variaveis.indexOf(objInterface.variavel!!)
                 spinnerVariavel.setSelection(ind)
@@ -77,7 +77,6 @@ class InterfaceActivity : AppCompatActivity() {
     private fun configAdapterVariavel(variaveis: List<Variavel>): ArrayAdapter<Variavel> {
         var adapter: ArrayAdapter<Variavel> =
             ArrayAdapter(this, android.R.layout.simple_spinner_item, variaveis)
-            //ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, variaveis)
         return adapter
     }
 
