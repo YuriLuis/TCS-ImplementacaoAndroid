@@ -105,6 +105,9 @@ interface IDataService {
     @GET("interface")
     fun findAllInterface(): Call<List<Interface>>
 
+    @GET("interface/interfacesComRegras")
+    fun findInterfacesByRegra(): Call<List<Interface>>
+
     @GET("interface/{id}")
     fun findByIdInterface(@Path("id") id: Int?): Call<Interface>
 

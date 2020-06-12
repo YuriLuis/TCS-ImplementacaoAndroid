@@ -23,6 +23,8 @@ class ListaRegrasActivity : AppCompatActivity() {
     private lateinit var recyclerViewRegras: RecyclerView
     private var listaRegras: ArrayList<Regra> = mutableListOf<Regra>() as ArrayList<Regra>
 
+    val RETORNO_REGRA = 210
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lista_regras)
@@ -62,11 +64,7 @@ class ListaRegrasActivity : AppCompatActivity() {
                 response: Response<List<Regra>>
             ) {
                 if (response.isSuccessful) {
-                    var regras: List<Regra> = response.body()!!
-                    regras.forEach { variavel ->
-                        listaRegras.add(variavel)
-                        /**Salva dados da API no Array*/
-                    }
+                    listaRegras = response.body()!! as ArrayList<Regra>
                 }
             }
 
@@ -84,19 +82,19 @@ class ListaRegrasActivity : AppCompatActivity() {
         recyclerViewRegras.setHasFixedSize(true)
 
         adapter.onItemClick = { regra ->
-            startActivity(
+            startActivityForResult(
                 Intent(this, RegraActivity::class.java)
                     .putExtra("regra", regra)
-                    .putExtra("novo", false)
+                    .putExtra("novo", false) , RETORNO_REGRA
             )
         }
     }
 
     fun eventoClickFloatActionButtonAddRegra(view: View) {
-        startActivity(
+        startActivityForResult(
             Intent(this, RegraActivity::class.java)
                 .putExtra("regra", Regra())
-                .putExtra("novo", true) )
+                .putExtra("novo", true), RETORNO_REGRA)
     }
 
     private fun configuraAdapter(list: List<Regra>) {
@@ -107,5 +105,12 @@ class ListaRegrasActivity : AppCompatActivity() {
     private fun initcomponents() {
         recyclerViewRegras = findViewById<RecyclerView>(R.id.recyclerViewRegras)
         atualizaRecyclerViewRegras()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if ((requestCode == RETORNO_REGRA) && resultCode == RESULT_OK) {
+            atualizaRecyclerViewRegras()
+        }
     }
 }

@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Base64
 import android.util.Log
+import android.view.View
 import androidx.annotation.RequiresApi
 import com.yuri.luis.garcia.pereira.tcs_implementacao.R
 import com.yuri.luis.garcia.pereira.tcs_implementacao.config.RetrofitInitializer
@@ -24,6 +25,9 @@ class ResultadoAcitivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_resultado_acitivity)
+        TextDate.text = ""
+        textPercent.text = ""
+        imageViewResult.visibility = View.INVISIBLE
         buttonConfirm.setOnClickListener { confirmar() }
         val param = intent.getStringExtra("idExecucao") ?: "0"
         idExecucaoSel = param.toInt()
@@ -55,6 +59,7 @@ class ResultadoAcitivity : AppCompatActivity() {
                     textPercent.text = String.format("%.2f", execucao.percentualAcerto) + " % "
                     //TextDate.text = formattedDate
                     TextDate.text = execucao.concluido?.substring(0,10) ?: ""
+                    imageViewResult.visibility = View.VISIBLE
                 }
             }
 

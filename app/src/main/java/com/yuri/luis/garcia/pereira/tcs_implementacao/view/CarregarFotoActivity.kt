@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.view.View
 import android.widget.Button
 import androidx.appcompat.app.AlertDialog
 import androidx.loader.content.CursorLoader
@@ -16,6 +17,8 @@ import com.yuri.luis.garcia.pereira.tcs_implementacao.config.RetrofitInitializer
 import com.yuri.luis.garcia.pereira.tcs_implementacao.model.Foto
 import com.yuri.luis.garcia.pereira.tcs_implementacao.model.FotoRetorno
 import kotlinx.android.synthetic.main.activity_carregar_foto.*
+import kotlinx.android.synthetic.main.activity_carregar_foto.imageView
+import kotlinx.android.synthetic.main.activity_tirar_foto.*
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -32,6 +35,7 @@ class CarregarFotoActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_carregar_foto)
+        imageView.visibility = View.INVISIBLE
 
         val btn = findViewById<Button>(R.id.buttonPick).setOnClickListener {
             pegaImagemGaleria()
@@ -125,6 +129,7 @@ class CarregarFotoActivity : AppCompatActivity() {
             val bitImage = MediaStore.Images.Media.getBitmap(this?.contentResolver, URL)
             imageView.setImageBitmap(bitImage)
             if (URL != null) {
+                imageView.visibility = View.VISIBLE
                 //enviaImagem(URL)
                 getFoto(1)
             }
@@ -150,10 +155,13 @@ class CarregarFotoActivity : AppCompatActivity() {
 
     fun confirmar() {
         if (validate()) {
-            val intent = this.intent
+            val i = Intent(this, ExecucaoActivity::class.java)
+            i.putExtra("idImage", objRetornoImage.id_image.toString())
+            startActivity(i)
+            /*val intent = this.intent
             intent.putExtra("idFoto", objRetornoImage.id_image.toString())
             this.setResult(Activity.RESULT_OK, intent)
-            this.finish()
+            this.finish()*/
         }
     }
 }

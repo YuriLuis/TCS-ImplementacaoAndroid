@@ -101,11 +101,11 @@ class ExecucaoActivity : AppCompatActivity() {
             for (resposta in regra.respostas) {
                 val pergunta = getPerguntaVariavel(resposta.regraItem?.variavel!!)
                 if (pergunta.trim().length > 0) {
-                    lista.add(resposta.resposta!!.idVariavelValor.toString())
+                    lista.add(resposta.idExecucaoRegraResposta.toString()+";"+resposta.resposta!!.idVariavelValor.toString())
                 }
                 else
                 {
-                    lista.add("-1")
+                    lista.add(resposta.idExecucaoRegraResposta.toString()+";"+"-1")
                 }
             }
         }
@@ -221,7 +221,7 @@ class ExecucaoActivity : AppCompatActivity() {
     }
 
     private fun carregaInterfaces() {
-        var call = RetrofitInitializer().Service().findAllInterface()
+        var call = RetrofitInitializer().Service().findInterfacesByRegra()
         call.enqueue(object : Callback<List<Interface>> {
             override fun onFailure(call: Call<List<Interface>>, t: Throwable) {
                 Log.d("CHRISTIAN", "Falhou carregaInterfaces: $t.message")

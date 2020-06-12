@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.view.View
 import android.widget.Button
 import android.widget.Toast
 import com.google.firebase.storage.FirebaseStorage
@@ -16,7 +17,9 @@ import com.yuri.luis.garcia.pereira.tcs_implementacao.config.RetrofitInitializer
 import com.yuri.luis.garcia.pereira.tcs_implementacao.model.Foto
 import com.yuri.luis.garcia.pereira.tcs_implementacao.model.FotoRetorno
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_resultado_acitivity.*
 import kotlinx.android.synthetic.main.activity_tirar_foto.*
+import kotlinx.android.synthetic.main.activity_tirar_foto.buttonConfirm
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -29,6 +32,7 @@ class TirarFotoActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tirar_foto)
+        imageView.visibility = View.INVISIBLE
         tirarFoto.setOnClickListener { takePhoto() }
         buttonConfirm.setOnClickListener { confirmar() }
     }
@@ -60,6 +64,7 @@ class TirarFotoActivity : AppCompatActivity() {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             val imageBitmap = data?.extras?.get("data") as Bitmap
             imageView.setImageBitmap(imageBitmap)
+            imageView.visibility = View.VISIBLE
             val stream = ByteArrayOutputStream()
             imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
             val imageEncoded = stream.toByteArray()
@@ -95,10 +100,13 @@ class TirarFotoActivity : AppCompatActivity() {
 
     fun confirmar() {
         if (validate()) {
-            val intent = this.intent
+            val i = Intent(this, ExecucaoActivity::class.java)
+            i.putExtra("idImage", objRetornoImage.id_image.toString())
+            startActivity(i)
+            /*val intent = this.intent
             intent.putExtra("idFoto", objRetornoImage.id_image.toString())
             this.setResult(Activity.RESULT_OK, intent)
-            this.finish()
+            this.finish()*/
         }
     }
 }

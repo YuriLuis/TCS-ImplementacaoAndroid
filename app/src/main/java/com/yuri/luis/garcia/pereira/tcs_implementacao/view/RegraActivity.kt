@@ -1,5 +1,6 @@
 package com.yuri.luis.garcia.pereira.tcs_implementacao.view
 
+import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -115,7 +116,9 @@ class RegraActivity : AppCompatActivity() {
             override fun onFailure(call: Call<Regra>, t: Throwable) { }
             override fun onResponse(call: Call<Regra>, response: Response<Regra>) {
                 if (response.isSuccessful) {
+                    Log.d("CHRISTIAN", "Recarregado lista de regras...")
                     var reg = response.body()!!
+                    Log.d("CHRISTIAN", reg.itens.toString())
                     reg.itens?.let { configuraAdapter(it) }
                     adapter.notifyDataSetChanged()
                 }
@@ -154,10 +157,7 @@ class RegraActivity : AppCompatActivity() {
         call.enqueue(object : Callback<List<Regra>> {
             override fun onResponse(call: Call<List<Regra>>, response: Response<List<Regra>>) {
                 if (response.isSuccessful) {
-                    var regs: List<Regra> = response.body()!!
-                    regs.forEach { r ->
-                        listaRegras.add(r)
-                    }
+                    listaRegras = response.body()!! as ArrayList<Regra>
                 }
             }
             override fun onFailure(call: Call<List<Regra>>, t: Throwable) {  }
@@ -202,6 +202,11 @@ class RegraActivity : AppCompatActivity() {
         configuraRecyclerViewRegraResultado(adapterResultado)
     }
 
+    private fun voltaListaRegras() {
+        this.setResult(Activity.RESULT_OK, intent)
+        this.finish()
+    }
+
     private fun deleteRegra() {
         var call = RetrofitInitializer().Service().deleteRegra(regra.idRegra!!)
         call.enqueue(object : Callback<Void> {
@@ -217,6 +222,8 @@ class RegraActivity : AppCompatActivity() {
                 if (response.isSuccessful) {
                     Toast.makeText(this@RegraActivity, "Excluído com sucesso", Toast.LENGTH_LONG)
                         .show()
+                    Log.d("CHRISTIAN", "Regra deletada...")
+                    voltaListaRegras()
                 }
             }
 
@@ -403,10 +410,12 @@ class RegraActivity : AppCompatActivity() {
                     postRegras()
                     atualizaRecyclerViewRegras()
                     atualizaRecyclerViewRegrasResultado()
-                    finish()
+                    this.setResult(Activity.RESULT_OK, intent)
+                    this.finish()
                 } else {
                     updateRegra()
-                    finish()
+                    this.setResult(Activity.RESULT_OK, intent)
+                    this.finish()
                 }
             }
         }
@@ -415,15 +424,12 @@ class RegraActivity : AppCompatActivity() {
     private fun ouvinteClickBotaoExcluir() {
         botaoExcluir.setOnClickListener {
             deleteRegra()
-            atualizaRecyclerViewRegras()
-            finish()
         }
     }
 
     private fun ouvinteClickBotaoCancelar() {
         botaoCancelar.setOnClickListener {
-            atualizaRecyclerViewRegras()
-            finish()
+            this.finish()
         }
     }
 

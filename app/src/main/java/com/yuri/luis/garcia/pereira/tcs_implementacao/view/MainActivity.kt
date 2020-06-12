@@ -51,13 +51,16 @@ class MainActivity : AppCompatActivity() {
                 startActivity(i)
             }
             else {
-                this.let {
+                val i = Intent(this, ExecucaoActivity::class.java)
+                i.putExtra("idImage", "0")
+                startActivity(i)
+                /*this.let {
                     AlertDialog.Builder(it)
                         .setTitle(R.string.app_name)
                         .setMessage("Nenhuma foto foi tira ou selecionada!!!")
                         .setPositiveButton("OK") { dialog, which -> dialog.dismiss()
                         }.show()
-                }
+                }*/
             }
         }
         if (selecao == "CadInterface") {
@@ -67,7 +70,8 @@ class MainActivity : AppCompatActivity() {
 
         if (selecao == "Foto"){
             val intent = Intent(this,TirarFotoActivity::class.java)
-            startActivityForResult(intent, RETORNO_TIRAR_FOTO)
+            //startActivityForResult(intent, RETORNO_TIRAR_FOTO)
+            startActivity(intent)
         }
 
         if (selecao == "CadRegra"){
@@ -82,7 +86,8 @@ class MainActivity : AppCompatActivity() {
 
         if (selecao == "carregaImagem"){
             val intent = Intent(this, CarregarFotoActivity::class.java)
-            startActivityForResult(intent, RETORNO_CARREGAR_FOTO)
+            //startActivityForResult(intent, RETORNO_CARREGAR_FOTO)
+            startActivity(intent)
         }
 
 

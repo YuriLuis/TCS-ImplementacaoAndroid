@@ -12,106 +12,131 @@
     tools:context=".view.ResultadoAcitivity">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Foto processada: "
-        android:textAlignment="center"
-        android:textStyle="bold" />
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="16dp"
+        android:fontFamily="cursive"
+        android:text="Resultado"
+        android:textSize="36sp" />
 
-    <ImageView
-        android:id="@+id/imageViewResult"
-        android:layout_width="337dp"
-        android:layout_height="335dp"
-        android:contentDescription="TODO"
-        android:paddingTop="24dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.336"
-        app:srcCompat="@drawable/ic_launcher_background" />
-
-    <GridLayout
+    <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:columnCount="4"
-        android:paddingTop="10dp">
+        android:layout_gravity="center_horizontal">
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_column="1"
-            android:layout_columnWeight="1"
-            android:layout_gravity="left"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/textConcluido"
+                android:id="@+id/textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Concluído:"
+                android:layout_marginTop="25dp"
+                android:text="Foto processada: "
                 android:textSize="18dp"
                 android:textStyle="bold" />
-        </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_column="3"
-            android:layout_columnWeight="1"
-            android:layout_gravity="right"
-            android:orientation="vertical">
+            <ImageView
+                android:id="@+id/imageViewResult"
+                android:layout_width="337dp"
+                android:layout_height="335dp"
+                android:contentDescription="TODO"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.336"
+                app:srcCompat="@drawable/ic_launcher_background" />
 
-            <TextView
-                android:id="@+id/TextDate"
-                android:layout_width="wrap_content"
+            <GridLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="3424234242424242"
-                android:textSize="18dp"
-                android:textStyle="bold" />
-        </LinearLayout>
-    </GridLayout>
-    <GridLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:columnCount="4"
-        android:paddingTop="10dp">
+                android:columnCount="4"
+                android:paddingTop="10dp">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_column="1"
-            android:layout_columnWeight="1"
-            android:layout_gravity="left"
-            android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="1"
+                    android:layout_columnWeight="1"
+                    android:layout_gravity="left"
+                    android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/textPercentual"
-                android:layout_width="wrap_content"
+                    <TextView
+                        android:id="@+id/textConcluido"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Concluído:"
+                        android:textSize="18dp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="3"
+                    android:layout_columnWeight="1"
+                    android:layout_gravity="right"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/TextDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="3424234242424242"
+                        android:textSize="18dp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </GridLayout>
+
+            <GridLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Percentual :"
-                android:textSize="18dp"
-                android:textStyle="bold"/>
-        </LinearLayout>
+                android:columnCount="4"
+                android:paddingTop="10dp">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_column="3"
-            android:layout_columnWeight="1"
-            android:layout_gravity="right"
-            android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="1"
+                    android:layout_columnWeight="1"
+                    android:layout_gravity="left"
+                    android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/textPercent"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="70%"
-                android:textSize="18dp"
-                android:textStyle="bold"/>
+                    <TextView
+                        android:id="@+id/textPercentual"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Percentual :"
+                        android:textSize="18dp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="3"
+                    android:layout_columnWeight="1"
+                    android:layout_gravity="right"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textPercent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="70%"
+                        android:textSize="18dp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </GridLayout>
+
         </LinearLayout>
-    </GridLayout>
+    </ScrollView>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -122,6 +147,7 @@
         <GridLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="50px"
             android:columnCount="4">
 
             <Button
@@ -132,8 +158,8 @@
                 android:layout_columnWeight="1"
                 android:layout_gravity="right"
                 android:background="@color/botaoAdd"
-                android:textColor="@color/textoBranco"
-                android:text="Fechar" />
+                android:text="Fechar"
+                android:textColor="@color/textoBranco" />
         </GridLayout>
     </LinearLayout>
 
