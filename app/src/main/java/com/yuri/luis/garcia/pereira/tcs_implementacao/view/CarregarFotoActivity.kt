@@ -31,6 +31,7 @@ class CarregarFotoActivity : AppCompatActivity() {
 
     private val LOAD_IMAGE_RESULTS = 1
     private var objRetornoImage: FotoRetorno = FotoRetorno(null, null)
+    private val TAG_SISTEMA = "CHRISTIAN";
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,28 +56,17 @@ class CarregarFotoActivity : AppCompatActivity() {
     }
 
     private fun enviaImagem(data: Uri) {
-        var file = File(this?.let { getRealPathFromURIAPI11to18(it, data) })
-        Log.d("CHRISTIAN", "dir: ${file.absoluteFile}")
-
-        var requestFile: RequestBody = RequestBody.create(MediaType.parse("image/*"), file)
-        var fileToUpload: MultipartBody.Part =
-            MultipartBody.Part.createFormData("image_original", file.name, requestFile)
-
-        var call = RetrofitInitializer().ServicePython().enviaImagem(fileToUpload, requestFile)
+        val file = File(this?.let { getRealPathFromURIAPI11to18(it, data) })
+        val requestFile: RequestBody = RequestBody.create(MediaType.parse("image/*"), file)
+        val fileToUpload: MultipartBody.Part = MultipartBody.Part.createFormData("image_original", file.name, requestFile)
+        val call = RetrofitInitializer().ServicePython().enviaImagem(fileToUpload, requestFile)
         call.enqueue(object : Callback<FotoRetorno> {
             override fun onFailure(call: Call<FotoRetorno>, t: Throwable) {
-                Log.d("CHRISTIAN", "Falhou enviaImagem: $t.message")
+                Log.d(TAG_SISTEMA, "Falhou enviaImagem: $t.message")
             }
-
             override fun onResponse(call: Call<FotoRetorno>, response: Response<FotoRetorno>) {
-                Log.d(
-                    "CHRISTIAN",
-                    "********** Retornou enviaImagem *********:  $response.isSuccessful"
-                )
-                Log.d("CHRISTIAN", response.isSuccessful.toString())
                 if (response.isSuccessful) {
                     objRetornoImage = response.body()!!
-                    Log.d("CHRISTIAN", "Retornou: $objRetornoImage")
                 }
             }
 
@@ -130,7 +120,7 @@ class CarregarFotoActivity : AppCompatActivity() {
             imageView.setImageBitmap(bitImage)
             if (URL != null) {
                 imageView.visibility = View.VISIBLE
-                //enviaImagem(URL)
+                enviaImagem(URL)
                 getFoto(1)
             }
         }

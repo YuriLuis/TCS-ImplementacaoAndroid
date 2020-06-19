@@ -154,8 +154,6 @@ class ExecucaoActivity : AppCompatActivity() {
         if (index > 0) {
             buttonVoltar.visibility = View.VISIBLE
         }
-
-        Log.d("CHRISTIAN", "Carregando as perguntas...")
         var _index: Int = -1
         for (regra in objExecucao.regras) {
             for (resposta in regra.respostas) {
@@ -168,11 +166,9 @@ class ExecucaoActivity : AppCompatActivity() {
                             val checkBox = CheckBox(this)
                             checkBox.text = valor?.valor
                             checkBox.id = valor?.idVariavelValor!!.toInt()
-
                             if (resposta.resposta != null) {
                                 checkBox.isChecked = (resposta!!.resposta!!.idVariavelValor == valor?.idVariavelValor!!)
                             }
-
                             linearLayout.addView(checkBox)
                             checkBoxs.add(checkBox.id.toString())
                         }
