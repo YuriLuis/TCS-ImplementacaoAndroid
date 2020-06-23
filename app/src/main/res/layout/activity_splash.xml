@@ -4,23 +4,69 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center"
     android:background="@color/colorPrimary"
+    android:gravity="center"
+    android:orientation="vertical"
     tools:context=".view.SplashActivity">
 
-    <ImageView
-        android:src="@drawable/logo"
-        android:layout_width="250dp"
-        android:layout_height="250dp" />
     <TextView
-        android:layout_width="wrap_content"
+        android:id="@+id/textView5"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TCS - Senac 2020 - Carregando..."
-        android:textColor="#fff"
-        android:textSize="30sp"
-        android:gravity="center"
-        android:textAlignment="gravity"
-        android:textStyle="bold" />
+        android:fontFamily="cursive"
+        android:gravity="center_horizontal"
+        android:text="Viti+"
+        android:textSize="45sp" />
 
+    <ProgressBar
+        android:id="@+id/progressBar2"
+        style="@android:style/Widget.DeviceDefault.Light.ProgressBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:progressDrawable="@color/botaoAdd"
+        android:progressTint="@color/botaoExcluir" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:textColor="@color/colorPrimary"
+        android:textSize="30sp" />
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="cursive"
+        android:gravity="center"
+        android:text="Christian Adriano"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="cursive"
+        android:gravity="center"
+        android:text="Jackson Michel Maul"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="cursive"
+        android:gravity="center"
+        android:text="Janquiel Douglas da Silva Felipeto"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="cursive"
+        android:gravity="center"
+        android:text="Yuri Luis Garcia Pereira"
+        android:textSize="24sp" />
 </LinearLayout>
