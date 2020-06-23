@@ -106,7 +106,7 @@ class ValorVariavelActivity : AppCompatActivity() {
 
         if (isCampoInvalido(textoValor.text.toString())) {
             botaoExlcuir.visibility = View.INVISIBLE
-            botaoCancelar.visibility = View.INVISIBLE
+            botaoCancelar.visibility = View.VISIBLE
             isNewVariavel = true
             /**NOVA_VARIAVEL*/
             textoValor.setText(valor.valor)
