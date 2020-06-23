@@ -48,7 +48,6 @@ class VariavelActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_variavel)
-
         recuperaDadosIntentVariavel()
         initComponents()
         carregaDadosApiVariavel()
@@ -92,16 +91,17 @@ class VariavelActivity : AppCompatActivity() {
     private fun verificaSeVariavelEhEditadaOuNova() {
         nomeVariavel.setText(variavel.nome)
 
-        if (valor !=null){
+        if (!nomeVariavel.text.toString().equals("")){
             atualizaRecyclerViewVariaveis()
             botaoExcluir.visibility = View.VISIBLE
             botaoCancelar.visibility = View.VISIBLE
             /**EDITAR*/
             botaoAdicionar.text = getString(R.string.editar)
             verificaTipoDaVariavelPorId()
-        }else {
+        }
+        else {
             botaoExcluir.visibility = View.INVISIBLE
-            botaoCancelar.visibility = View.INVISIBLE
+            botaoCancelar.visibility = View.VISIBLE
             isNewVariavel = true
             /**NOVA_VARIAVEL*/
             nomeVariavel.setText(variavel.nome)
