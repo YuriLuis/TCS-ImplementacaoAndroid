@@ -2,15 +2,17 @@ package com.yuri.luis.garcia.pereira.tcs_implementacao.view
 
 import android.content.DialogInterface
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.graphics.Typeface
 import android.os.Bundle
 import android.util.Log
+import android.util.TypedValue
 import android.view.View
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import com.yuri.luis.garcia.pereira.tcs_implementacao.R
 import com.yuri.luis.garcia.pereira.tcs_implementacao.config.RetrofitInitializer
 import com.yuri.luis.garcia.pereira.tcs_implementacao.model.Execucao
@@ -20,6 +22,7 @@ import com.yuri.luis.garcia.pereira.tcs_implementacao.model.VariavelValor
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+
 
 class ExecucaoActivity : AppCompatActivity() {
     private lateinit var objExecucao: Execucao
@@ -148,6 +151,8 @@ class ExecucaoActivity : AppCompatActivity() {
         checkBoxs.clear()
 
         val textViewPergunta = TextView(this)
+        textViewPergunta.setTextSize(TypedValue.COMPLEX_UNIT_PX, 60f)
+        textViewPergunta.setTypeface(null, Typeface.BOLD);
         linearLayout.addView(textViewPergunta)
 
         buttonVoltar.visibility = View.INVISIBLE
@@ -164,6 +169,7 @@ class ExecucaoActivity : AppCompatActivity() {
                         textViewPergunta.text = pergunta
                         for (valor in resposta.regraItem?.variavel!!.valores) {
                             val checkBox = CheckBox(this)
+                            checkBox.setTextSize(TypedValue.COMPLEX_UNIT_PX, 55f)
                             checkBox.text = valor?.valor
                             checkBox.id = valor?.idVariavelValor!!.toInt()
                             if (resposta.resposta != null) {

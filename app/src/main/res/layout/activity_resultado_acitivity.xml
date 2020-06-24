@@ -25,7 +25,7 @@
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal">
+        android:layout_gravity="bottom|center_horizontal">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -33,7 +33,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/textViewLabelFoto"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
@@ -134,34 +134,31 @@
                         android:textStyle="bold" />
                 </LinearLayout>
             </GridLayout>
-
-        </LinearLayout>
-    </ScrollView>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="bottom|center_horizontal"
-        android:orientation="vertical">
-
-        <GridLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="50px"
-            android:columnCount="4">
-
-            <Button
-                android:id="@+id/buttonConfirm"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_column="3"
-                android:layout_columnWeight="1"
-                android:layout_gravity="right"
-                android:background="@color/botaoAdd"
-                android:text="Fechar"
-                android:textColor="@color/textoBranco" />
-        </GridLayout>
-    </LinearLayout>
+                android:layout_gravity="bottom|center_horizontal"
+                android:paddingTop="30dp"
+                android:orientation="vertical">
 
+                <GridLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="50px"
+                    android:columnCount="4">
 
+                    <Button
+                        android:id="@+id/buttonConfirm"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_column="3"
+                        android:layout_columnWeight="1"
+                        android:layout_gravity="right"
+                        android:background="@color/botaoAdd"
+                        android:text="Fechar"
+                        android:textColor="@color/textoBranco" />
+                </GridLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>
