@@ -3,6 +3,7 @@ package com.yuri.luis.garcia.pereira.tcs_implementacao.view
 import android.app.Activity
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.*
 import com.yuri.luis.garcia.pereira.tcs_implementacao.R
@@ -266,6 +267,7 @@ class RegraItemActivity : AppCompatActivity() {
         var call = RetrofitInitializer().Service().deleteRegraItem(regra.idRegra!!, regraItem)
         call.enqueue(object : Callback<Void> {
             override fun onFailure(call: Call<Void>, t: Throwable) {
+                Log.d("CHRISTIAN", "$t.message")
                 Toast.makeText(
                     this@RegraItemActivity,
                     "Ocorreu um erro tente novamente",
@@ -274,6 +276,7 @@ class RegraItemActivity : AppCompatActivity() {
             }
 
             override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                Log.d("CHRISTIAN",response.toString())
                 if (response.isSuccessful) {
                     Toast.makeText(
                         this@RegraItemActivity,

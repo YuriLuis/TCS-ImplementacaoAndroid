@@ -10,6 +10,7 @@ import android.provider.MediaStore
 import android.util.Log
 import android.view.View
 import android.widget.Button
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.loader.content.CursorLoader
 import com.yuri.luis.garcia.pereira.tcs_implementacao.R
@@ -31,6 +32,7 @@ class CarregarFotoActivity : AppCompatActivity() {
 
     private val LOAD_IMAGE_RESULTS = 1
     private var objRetornoImage: FotoRetorno = FotoRetorno(null, null)
+    private lateinit var botaoConfirmar: Button
     private val TAG_SISTEMA = "CHRISTIAN";
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,9 +44,11 @@ class CarregarFotoActivity : AppCompatActivity() {
             pegaImagemGaleria()
         }
 
-        val btn2 = findViewById<Button>(R.id.buttonConfirm).setOnClickListener {
+        botaoConfirmar = findViewById<Button>(R.id.buttonConfirm)
+        botaoConfirmar.setOnClickListener {
             confirmar()
         }
+        botaoConfirmar.visibility = View.INVISIBLE
     }
 
     private fun pegaImagemGaleria() {
@@ -63,10 +67,17 @@ class CarregarFotoActivity : AppCompatActivity() {
         call.enqueue(object : Callback<FotoRetorno> {
             override fun onFailure(call: Call<FotoRetorno>, t: Throwable) {
                 Log.d(TAG_SISTEMA, "Falhou enviaImagem: $t.message")
+                Toast.makeText(
+                    this@CarregarFotoActivity,
+                    "Ocorreu um erro tente novamente: $t.message",
+                    Toast.LENGTH_LONG
+                ).show()
             }
             override fun onResponse(call: Call<FotoRetorno>, response: Response<FotoRetorno>) {
+                Log.d(TAG_SISTEMA, response.toString())
                 if (response.isSuccessful) {
                     objRetornoImage = response.body()!!
+                    botaoConfirmar.visibility = View.VISIBLE
                 }
             }
 
@@ -121,7 +132,7 @@ class CarregarFotoActivity : AppCompatActivity() {
             if (URL != null) {
                 imageView.visibility = View.VISIBLE
                 enviaImagem(URL)
-                getFoto(1)
+                //getFoto(1)
             }
         }
 

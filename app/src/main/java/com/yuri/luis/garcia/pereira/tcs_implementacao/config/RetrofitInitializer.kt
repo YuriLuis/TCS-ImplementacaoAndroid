@@ -12,7 +12,7 @@ class RetrofitInitializer {
             .build()
 
     private val retrofitPython: Retrofit =  Retrofit.Builder()
-        .baseUrl("http://52.204.71.114/")
+        .baseUrl("https://api-tcs-opencv.herokuapp.com/")
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 

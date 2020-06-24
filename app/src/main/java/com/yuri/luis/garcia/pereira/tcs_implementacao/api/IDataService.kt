@@ -57,7 +57,7 @@ interface IDataService {
 
     @Multipart
     @POST("imagens")
-    fun enviaImagem(@Part file: MultipartBody.Part, @Part("file") name: RequestBody): retrofit2.Call<FotoRetorno>
+    fun enviaImagem(@Part file: MultipartBody.Part, @Part("image_original") name: RequestBody): retrofit2.Call<FotoRetorno>
 
     @GET("imagens")
     fun getImagem(): retrofit2.Call<FotoRetorno>
@@ -85,10 +85,7 @@ interface IDataService {
     fun postRegraItem(@Path("idregra") idregra: Int, @Body item: RegraItem) : Call<RegraItem>
 
     @POST("regra/deletaItem/{idregra}")
-    fun deleteRegraItem(
-        @Path("idregra") idregra: Int,
-        @Body item: RegraItem
-    ): Call<Void>
+    fun deleteRegraItem(@Path("idregra") idregra: Int, @Body item: RegraItem): Call<Void>
 
     @POST("regra/adicionaItemResultado/{idregra}")
     fun postRegraItemResultado(@Path("idregra") idregra: Int, @Body item: RegraItemResultado) : Call<RegraItemResultado>
