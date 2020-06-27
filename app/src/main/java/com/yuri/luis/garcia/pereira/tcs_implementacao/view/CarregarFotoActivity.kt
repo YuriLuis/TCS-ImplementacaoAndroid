@@ -100,6 +100,7 @@ class CarregarFotoActivity : AppCompatActivity() {
                 if (response.isSuccessful) {
                     val foto = response.body()!!
                     objRetornoImage = FotoRetorno(foto.idFoto, "success")
+                    botaoConfirmar.visibility = View.VISIBLE
                     Log.d("CHRISTIAN", "Retornou: $objRetornoImage")
                 }
             }

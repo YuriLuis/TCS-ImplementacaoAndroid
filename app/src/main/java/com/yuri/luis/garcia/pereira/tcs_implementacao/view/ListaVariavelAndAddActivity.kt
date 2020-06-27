@@ -74,7 +74,6 @@ class ListaVariavelAndAddActivity : AppCompatActivity() {
                     var variaveis: List<Variavel> = response.body()!!
                     variaveis.forEach { variavel ->
                         listaVariaveis.add(variavel)
-                        /**Salva dados da API no Array*/
                     }
                 }
             }

@@ -135,12 +135,11 @@
                 </LinearLayout>
             </GridLayout>
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom|center_horizontal"
+                android:layout_gravity="center_horizontal"
                 android:paddingTop="30dp"
                 android:orientation="vertical">
-
                 <GridLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
